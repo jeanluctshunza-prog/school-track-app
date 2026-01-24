@@ -3,134 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEK HAIR BEAUTY | Boutique Officielle</title>
+    <title>NEK HAIR BEAUTY | Officiel</title>
     <style>
-        body { 
-            background-image: url('background.jpg'); 
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: #fff; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; 
-        }
-        .overlay { background: rgba(0, 0, 0, 0.82); min-height: 100vh; padding: 20px; box-sizing: border-box; }
-        .gold { color: #D4AF37; text-shadow: 2px 2px 4px #000; }
-        .logo { width: 130px; margin-top: 10px; }
-        .product-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-        .product-card { 
-            background: rgba(20, 20, 20, 0.95); border: 1.5px solid #D4AF37; 
-            border-radius: 15px; width: 270px; padding: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-        }
-        .product-card img { width: 100%; border-radius: 10px; height: 230px; object-fit: cover; border: 1px solid #333; }
-        input, select, textarea { 
-            width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; 
-            border: 1px solid #D4AF37; background: #000; color: #fff; font-size: 14px;
-        }
-        .btn-add { background: #D4AF37; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn-add:hover { background: #fff; }
-        .btn-whatsapp { 
-            background: #25D366; color: white; padding: 18px; border: none; 
-            border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; font-size: 17px; margin-top: 15px;
-        }
-        .cart-section { max-width: 500px; margin: 40px auto; background: #0a0a0a; padding: 25px; border-radius: 20px; border: 2px solid #25D366; }
+        body { background: #000; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 15px; }
+        .gold { color: #D4AF37; }
+        .card { background: #111; border: 1px solid #D4AF37; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; }
+        .info-box { background: #1a1a1a; padding: 10px; border-radius: 8px; font-size: 0.85em; border-left: 4px solid #D4AF37; margin-bottom: 15px; text-align: left; }
+        .colors { max-height: 100px; overflow-y: auto; background: #000; padding: 8px; border-radius: 5px; font-size: 0.85em; }
+        label { display: block; margin: 6px 0; cursor: pointer; }
+        input[type="checkbox"], input[type="radio"] { accent-color: #D4AF37; margin-right: 10px; }
+        .cart { background: #0a0a0a; padding: 20px; border-radius: 15px; border: 1px solid #25D366; text-align: left; }
+        input[type="text"], textarea, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #fff; box-sizing: border-box; }
+        .btn-wa { background: #25D366; color: #fff; padding: 18px; border: none; border-radius: 50px; width: 100%; font-size: 1.1em; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-<div class="overlay">
-    <img src="logo.png" alt="Logo NEK HAIR" class="logo">
     <h1 class="gold">NEK HAIR BEAUTY</h1>
-    <p style="font-size: 1.1em; letter-spacing: 1px;"><i>L'élégance et le luxe pour vos cheveux</i></p>
+    
+    <div class="info-box">
+        📍 <b>Adresse :</b> Boulevard Lumumba, Concession Kin Marché Debonhomme.<br>
+        <i>Réf : Station Engen avant le saut de mouton Debonhomme.</i>
+    </div>
 
-    <div class="product-grid">
+    <div class="info-box">
+        🚚 <b>Livraison :</b> Partout à Kinshasa (Dès 8000 FC).<br>
+        ⏱️ Délai : 1 heure après la commande.
+    </div>
+
+    <div class="card">
+        <h3 class="gold">French Curly (22") - 8$</h3>
+        <div class="colors">
+            <label><input type="checkbox" name="p" value="French 1B"> 1B</label><label><input type="checkbox" name="p" value="French 27#"> 27#</label>
+            <label><input type="checkbox" name="p" value="French 30#"> 30#</label><label><input type="checkbox" name="p" value="French 350#"> 350#</label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="gold">Afro Kinky Bulk (100% Humain)</h3>
+        <select id="afroSize">
+            <option value="12 pouces">12 pouces</option><option value="14 pouces">14 pouces</option>
+            <option value="16 pouces">16 pouces</option><option value="18 pouces">18 pouces</option>
+        </select>
+        <label><input type="checkbox" id="afroCheck" value="Afro Noir Naturel"> Noir Naturel</label>
+    </div>
+
+    <div class="cart">
+        <h3 class="gold">Ma Commande</h3>
+        <input type="text" id="nom" placeholder="Votre Nom">
         
-        <div class="product-card">
-            <img src="photo1.jpg" alt="French Curly">
-            <h3 class="gold">French Curly</h3>
-            <p>22 pouces : <b style="font-size: 1.2em; color: #fff;">8$</b></p>
-            <input type="text" id="col1" placeholder="Couleur (ex: Noir, 1B, 27...)">
-            <button class="btn-add" onclick="ajouter('French Curly (22p) - 8$', 'col1')">Ajouter au panier</button>
-        </div>
+        <p><b>Mode de Paiement :</b></p>
+        <label><input type="radio" name="pay" value="Cash à la livraison" checked> 💵 Cash à la livraison</label>
+        <label><input type="radio" name="pay" value="M-Pesa (0838789465)"> 📱 M-Pesa (EUNICE NTUMBA)</label>
+        <label><input type="radio" name="pay" value="Orange Money (0840847260)"> 📱 Orange Money (EUNICE NTUMBA)</label>
 
-        <div class="product-card">
-            <img src="photo2.jpg" alt="Mèches lisses">
-            <h3 class="gold">Mèches lisses</h3>
-            <p>22 pouces : <b style="font-size: 1.2em; color: #fff;">10$</b></p>
-            <input type="text" id="col2" placeholder="Couleur">
-            <button class="btn-add" onclick="ajouter('Mèches lisses (22p) - 10$', 'col2')">Ajouter au panier</button>
-        </div>
+        <p><b>Heure de livraison souhaitée :</b></p>
+        <select id="heure">
+            <option value="08h30 - 12h30">08h30 - 12h30</option>
+            <option value="12h30 - 15h30">12h30 - 15h30</option>
+            <option value="15h30 - 17h00">15h30 - 17h00</option>
+        </select>
 
-        <div class="product-card">
-            <img src="photo3.jpg" alt="Jumbo Hair">
-            <h3 class="gold">Jumbo Hair</h3>
-            <p>24 pouces : <b style="font-size: 1.2em; color: #fff;">5$</b></p>
-            <input type="text" id="col3" placeholder="Couleur">
-            <button class="btn-add" onclick="ajouter('Jumbo Hair (24p) - 5$', 'col3')">Ajouter au panier</button>
-        </div>
+        <input type="text" id="adr" placeholder="Votre adresse exacte">
+        <textarea id="det" rows="3" placeholder="Détails (ex: Heure précise, couleur...)"></textarea>
 
-        <div class="product-card">
-            <img src="photo4.jpg" alt="Afro Kinky">
-            <h3 class="gold">Afro Kinky</h3>
-            <p>100% Human Hair</p>
-            <select id="size4">
-                <option value="12 pouces : 20$">12 pouces : 20$</option>
-                <option value="14 pouces : 25$">14 pouces : 25$</option>
-                <option value="16 pouces : 30$">16 pouces : 30$</option>
-                <option value="18 pouces : 35$">18 pouces : 35$</option>
-            </select>
-            <input type="text" id="col4" placeholder="Couleur">
-            <button class="btn-add" onclick="ajouterAfro()">Ajouter au panier</button>
-        </div>
-
+        <button onclick="send()" class="btn-wa">Commander via WhatsApp</button>
     </div>
 
-    <div class="cart-section">
-        <h2 class="gold">📝 Ma Commande</h2>
-        <textarea id="panier" readonly style="height: 120px;" placeholder="Votre sélection s'affichera ici..."></textarea>
-        <input type="text" id="nom" placeholder="Votre Nom complet" required>
-        <input type="text" id="adresse" placeholder="Adresse (Quartier, Avenue, N°)" required>
-        <button onclick="envoyerWA()" class="btn-whatsapp">✅ Envoyer la commande sur WhatsApp</button>
-    </div>
+    <script>
+        function send() {
+            let n = document.getElementById('nom').value, a = document.getElementById('adr').value, d = document.getElementById('det').value;
+            let h = document.getElementById('heure').value, p = document.querySelector('input[name="pay"]:checked').value;
+            let items = "";
+            document.querySelectorAll('input[name="p"]:checked').forEach(c => { items += "• " + c.value + "%0A"; });
+            if(document.getElementById('afroCheck').checked) items += "• Afro Kinky (" + document.getElementById('afroSize').value + ")%0A";
+            
+            if(!n || items === "") return alert("Nom et articles requis !");
 
-    <div style="margin-top: 30px; padding-bottom: 20px;">
-        <p class="gold">Partagez notre salon :</p>
-        <img src="qrcode.png" width="120" style="background:white; padding:8px; border-radius:10px;">
-        <p style="font-size: 0.8em; opacity: 0.5; margin-top: 20px;">© 2026 NEK HAIR BEAUTY</p>
-    </div>
-</div>
-
-<script>
-    function ajouter(item, idCol) {
-        var couleur = document.getElementById(idCol).value;
-        if(couleur == "") { alert("Veuillez préciser la couleur"); return; }
-        document.getElementById('panier').value += "• " + item + " | Couleur: " + couleur + "\n";
-        alert("Ajouté !");
-    }
-
-    function ajouterAfro() {
-        var choix = document.getElementById('size4').value;
-        var couleur = document.getElementById('col4').value;
-        if(couleur == "") { alert("Veuillez préciser la couleur"); return; }
-        document.getElementById('panier').value += "• Afro Kinky " + choix + " | Couleur: " + couleur + "\n";
-        alert("Ajouté !");
-    }
-
-    function envoyerWA() {
-        var n = document.getElementById('nom').value;
-        var a = document.getElementById('adresse').value;
-        var p = document.getElementById('panier').value;
-        var num = "243840847260"; // ✅ NUMÉRO MIS À JOUR
-
-        if(n=="" || a=="" || p=="") { 
-            alert("Veuillez remplir votre nom, adresse et ajouter au moins un article."); 
-            return; 
+            let msg = "Bonjour *NEK HAIR*, commande de :%0A" + encodeURIComponent(n) + "%0A%0A" +
+                      "*PAIEMENT :* " + encodeURIComponent(p) + "%0A" +
+                      "*HEURE :* " + h + "%0A" +
+                      "*ADRESSE :* " + encodeURIComponent(a) + "%0A%0A" +
+                      "*ARTICLES :*%0A" + items + "%0A" +
+                      "*DÉTAILS :* " + encodeURIComponent(d);
+            window.open("https://wa.me/243840847260?text=" + msg); // Numéro WhatsApp fourni
         }
-
-        var msg = "Bonjour *NEK HAIR BEAUTY*, je souhaite commander :%0A%0A" +
-                  "*NOM :* " + encodeURIComponent(n) + "%0A" +
-                  "*ADRESSE :* " + encodeURIComponent(a) + "%0A%0A" +
-                  "*DÉTAILS COMMANDE :*%0A" + encodeURIComponent(p);
-        
-        window.open("https://wa.me/" + num + "?text=" + msg, '_blank');
-    }
-</script>
-
+    </script>
 </body>
 </html>
