@@ -3,104 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEK HAIR BEAUTY | Catalogue Officiel</title>
+    <title>NEK HAIR BEAUTY | Commande Officielle</title>
     <style>
         :root { --gold: #D4AF37; --bg: #000; --card: rgba(30, 30, 30, 0.95); }
         body { background: var(--bg) url('background.jpg') no-repeat center center fixed; background-size: cover; color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; text-align: center; }
-        .overlay { background: rgba(0,0,0,0.8); min-height: 100vh; width: 100%; position: fixed; top: 0; left: 0; z-index: -1; }
+        .overlay { background: rgba(0,0,0,0.85); min-height: 100vh; width: 100%; position: fixed; top: 0; left: 0; z-index: -1; }
         .container { max-width: 600px; margin: auto; }
         .gold { color: var(--gold); }
-        .card { background: var(--card); border: 1px solid var(--gold); border-radius: 15px; padding: 20px; margin-bottom: 25px; text-align: left; }
-        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; border: 1px solid #444; }
+        .card { background: var(--card); border: 1px solid var(--gold); border-radius: 15px; padding: 15px; margin-bottom: 20px; text-align: left; position: relative; }
+        .card img { width: 100%; height: 230px; object-fit: cover; border-radius: 10px; border: 1px solid #444; margin-bottom: 10px; }
         
-        .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #000; padding: 10px; border-radius: 8px; max-height: 180px; overflow-y: auto; border: 1px solid #222; margin: 10px 0; }
-        .color-item { display: flex; align-items: center; font-size: 0.85em; cursor: pointer; }
-        .color-item input { margin-right: 8px; accent-color: var(--gold); }
+        .select-box { position: absolute; top: 25px; right: 25px; transform: scale(1.8); accent-color: var(--gold); }
+        
+        .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; background: #000; padding: 10px; border-radius: 8px; max-height: 150px; overflow-y: auto; border: 1px solid #222; margin: 10px 0; }
+        .color-item { display: flex; align-items: center; font-size: 0.8em; }
+        .color-item input { margin-right: 5px; accent-color: var(--gold); }
 
-        .qty-box { background: #111; padding: 12px; border-radius: 8px; border: 1px dashed var(--gold); display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .qty-input { width: 60px; background: #222; color: #fff; border: 1px solid var(--gold); text-align: center; padding: 5px; font-weight: bold; }
+        .qty-box { background: #111; padding: 10px; border-radius: 8px; border: 1px dashed var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        .qty-input { width: 50px; background: #222; color: #fff; border: 1px solid var(--gold); text-align: center; padding: 5px; }
         
         input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #fff; box-sizing: border-box; }
         .btn { background: var(--gold); color: #000; padding: 18px; border: none; border-radius: 50px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1em; text-transform: uppercase; }
         
         #step2 { display: none; }
+        .qr-img { width: 140px; background: #fff; padding: 10px; border-radius: 10px; margin: 20px auto; display: block; }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
     <div class="container">
+        <img src="logo.png" style="width:100px; margin-bottom:10px;">
         <h1 class="gold">NEK HAIR BEAUTY</h1>
-        <p>🚚 Livraison Kinshasa (8000 FC) en 1h</p>
+        <p style="font-size:0.9em;">📍 Debonhomme, Kinshasa | 🚚 Livraison: 8000 FC (1h)</p>
 
         <div id="step1">
             <div class="card">
+                <input type="checkbox" class="select-box" id="check_curly">
                 <img src="photo1.jpg">
                 <b class="gold">French Curly (22") - 8$</b>
-                <p style="font-size:0.8em;">Sélectionnez vos couleurs :</p>
                 <div class="color-grid">
-                    <label class="color-item"><input type="checkbox" name="f_c" value="1B"> 1B</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="27#"> 27#</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="30#"> 30#</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="350#"> 350#</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="613#"> 613#</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="1B"> 1B</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="27#"> 27#</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="30#"> 30#</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="350#"> 350#</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="613#"> 613#</label>
+                    <label class="color-item"><input type="checkbox" name="f_col" value="T33"> T33</label>
                 </div>
-                <div class="qty-box">Quantité souhaitée : <input type="number" id="q_f" class="qty-input" placeholder="0"></div>
+                <div class="qty-box">Quantité : <input type="number" id="q_curly" class="qty-input" placeholder="0"></div>
             </div>
 
             <div class="card">
+                <input type="checkbox" class="select-box" id="check_lisse">
+                <img src="photo2.jpg">
+                <b class="gold">Mèches Lisses (22") - 10$</b>
+                <div class="color-grid">
+                    <label class="color-item"><input type="checkbox" name="l_col" value="1B"> 1B</label>
+                    <label class="color-item"><input type="checkbox" name="l_col" value="BUG"> BUG</label>
+                    <label class="color-item"><input type="checkbox" name="l_col" value="27"> 27</label>
+                    <label class="color-item"><input type="checkbox" name="l_col" value="30/33"> 30/33</label>
+                    <label class="color-item"><input type="checkbox" name="l_col" value="B29"> B29</label>
+                </div>
+                <div class="qty-box">Quantité : <input type="number" id="q_lisse" class="qty-input" placeholder="0"></div>
+            </div>
+
+            <div class="card">
+                <input type="checkbox" class="select-box" id="check_jumbo">
                 <img src="photo3.jpg">
+                <b class="gold">Jumbo Hair (24") - 5$</b>
+                <div class="color-grid">
+                    <label class="color-item"><input type="checkbox" name="j_col" value="C14"> C14</label>
+                    <label class="color-item"><input type="checkbox" name="j_col" value="27#"> 27#</label>
+                    <label class="color-item"><input type="checkbox" name="j_col" value="30#"> 30#</label>
+                    <label class="color-item"><input type="checkbox" name="j_col" value="A37"> A37</label>
+                </div>
+                <div class="qty-box">Quantité : <input type="number" id="q_jumbo" class="qty-input" placeholder="0"></div>
+            </div>
+
+            <div class="card">
+                <input type="checkbox" class="select-box" id="check_afro">
+                <img src="photo4.jpg">
                 <b class="gold">Afro Kinky Bulk (100% Humain)</b>
-                <select id="a_s">
+                <select id="size_afro">
                     <option value="12 pouces (80$)">12 pouces - 80$</option>
                     <option value="14 pouces (90$)">14 pouces - 90$</option>
                     <option value="16 pouces (100$)">16 pouces - 100$</option>
                     <option value="18 pouces (110$)">18 pouces - 110$</option>
                 </select>
-                <label style="display:block; margin:10px 0;"><input type="checkbox" id="a_c"> Noir Naturel</label>
-                <div class="qty-box">Quantité souhaitée : <input type="number" id="q_a" class="qty-input" placeholder="0"></div>
+                <div class="qty-box" style="margin-top:10px;">Quantité : <input type="number" id="q_afro" class="qty-input" placeholder="0"></div>
             </div>
 
-            <button class="btn" onclick="go2()">Continuer vers le panier ➔</button>
+            <button class="btn" onclick="goStep2()">Valider la sélection ➔</button>
         </div>
 
         <div id="step2">
             <div class="card">
-                <h3 class="gold">Finaliser la commande</h3>
-                <input type="text" id="n" placeholder="Nom Complet">
-                <input type="text" id="t" placeholder="N° WhatsApp">
-                <input type="text" id="a" placeholder="Adresse exacte de livraison">
-                
-                <p>Heure de livraison :</p>
-                <select id="h">
-                    <option>08h30 - 12h30</option>
-                    <option>12h30 - 15h30</option>
-                    <option>15h30 - 17h00</option>
+                <h3 class="gold">Coordonnées de livraison</h3>
+                <input type="text" id="nom_c" placeholder="Nom Complet">
+                <input type="text" id="tel_c" placeholder="N° WhatsApp">
+                <input type="text" id="adr_c" placeholder="Adresse complète à Kinshasa">
+                <select id="pay_c">
+                    <option>Cash à la livraison</option>
+                    <option>M-Pesa (EUNICE NTUMBA : 0838789465)</option>
+                    <option>Orange Money (EUNICE NTUMBA : 0840847260)</option>
                 </select>
-
-                <textarea id="m" rows="3" placeholder="Notes (ex: livrer à 9h précise)"></textarea>
-                <button class="btn" style="background:#25D366; color:white;" onclick="send()">🚀 Envoyer la sélection</button>
+                <textarea id="note_c" placeholder="Notes (ex: livrer à 10h)"></textarea>
+                <button class="btn" style="background:#25D366; color:white;" onclick="envoyerWhatsApp()">🚀 Commander sur WhatsApp</button>
+                <p onclick="location.reload()" style="text-align:center; cursor:pointer; font-size:0.8em; margin-top:15px; color:#aaa;">← Modifier ma sélection</p>
             </div>
         </div>
+
+        <p class="gold" style="margin-top:30px;"><b>PARTAGER NOTRE ENTREPRISE</b></p>
+        <img src="qr_code.png" class="qr-img">
     </div>
 
     <script>
-        function go2() { document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; window.scrollTo(0,0); }
-        function send() {
-            let nom=document.getElementById('n').value, adr=document.getElementById('a').value;
-            if(!nom || !adr) return alert("Remplissez vos infos !");
-            
-            let res = "";
-            let f=[]; document.querySelectorAll('input[name="f_c"]:checked').forEach(e=>f.push(e.value));
-            if(f.length>0 && document.getElementById('q_f').value > 0) 
-                res += "*French Curly (x"+document.getElementById('q_f').value+"):* " + f.join(", ") + "%0A";
-            
-            if(document.getElementById('a_c').checked && document.getElementById('q_a').value > 0)
-                res += "*Afro Kinky (x"+document.getElementById('q_a').value+"):* " + document.getElementById('a_s').value + "%0A";
+        function goStep2() {
+            document.getElementById('step1').style.display='none';
+            document.getElementById('step2').style.display='block';
+            window.scrollTo(0,0);
+        }
 
-            let txt = "Bonjour *NEK HAIR BEAUTY*, voici ma sélection de panier :%0A%0A" + 
-                      "*Client:* " + nom + "%0A*Lieu:* " + adr + "%0A%0A*ARTICLES SELECTIONNÉS :*%0A" + res + 
-                      "%0A*Heure souhaitée:* " + document.getElementById('h').value;
-            window.open("https://wa.me/243840847260?text="+encodeURIComponent(txt));
+        function envoyerWhatsApp() {
+            let nom = document.getElementById('nom_c').value;
+            let adr = document.getElementById('adr_c').value;
+            if(!nom || !adr) return alert("Veuillez remplir votre nom et adresse !");
+
+            let detail = "";
+
+            if(document.getElementById('check_curly').checked) {
+                let col = []; document.querySelectorAll('input[name="f_col"]:checked').forEach(e => col.push(e.value));
+                detail += "*• French Curly (22\"):* " + (document.getElementById('q_curly').value || 1) + " paquet(s) | Coul: " + col.join("/") + "%0A";
+            }
+            if(document.getElementById('check_lisse').checked) {
+                let col = []; document.querySelectorAll('input[name="l_col"]:checked').forEach(e => col.push(e.value));
+                detail += "*• Mèches Lisses (22\"):* " + (document.getElementById('q_lisse').value || 1) + " paquet(s) | Coul: " + col.join("/") + "%0A";
+            }
+            if(document.getElementById('check_jumbo').checked) {
+                let col = []; document.querySelectorAll('input[name="j_col"]:checked').forEach(e => col.push(e.value));
+                detail += "*• Jumbo Hair (24\"):* " + (document.getElementById('q_jumbo').value || 1) + " paquet(s) | Coul: " + col.join("/") + "%0A";
+            }
+            if(document.getElementById('check_afro').checked) {
+                detail += "*• Afro Kinky (Humain):* " + (document.getElementById('q_afro').value || 1) + " paquet(s) | Taille: " + document.getElementById('size_afro').value + "%0A";
+            }
+
+            if(!detail) return alert("Veuillez cocher au moins un article !");
+
+            let finalMsg = "Bonjour *NEK HAIR BEAUTY*, voici ma commande :%0A%0A" +
+                           "*CLIENT:* " + nom + "%0A*ADRESSE:* " + adr + "%0A%0A" +
+                           "*ARTICLES :*%0A" + detail + "%0A" +
+                           "*PAIEMENT:* " + document.getElementById('pay_c').value + "%0A" +
+                           "*NOTE:* " + document.getElementById('note_c').value;
+
+            window.open("https://wa.me/243840847260?text=" + finalMsg);
         }
     </script>
 </body>
