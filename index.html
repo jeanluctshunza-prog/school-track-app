@@ -5,83 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEK HAIR BEAUTY | Officiel</title>
     <style>
-        /* Configuration de l'image de fond */
         body { 
             background-image: url('background.jpg'); 
             background-size: cover; 
             background-position: center; 
             background-attachment: fixed;
-            color: #fff; 
-            font-family: 'Segoe UI', sans-serif; 
-            text-align: center; 
-            margin: 0; 
-            padding: 20px; 
+            color: #fff; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; 
         }
-
-        /* Superposition sombre pour lire le texte */
-        .overlay {
-            background: rgba(0, 0, 0, 0.6);
-            min-height: 100vh;
-            padding: 20px;
+        .overlay { background: rgba(0, 0, 0, 0.75); min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .gold { color: #D4AF37; text-shadow: 2px 2px 4px #000; }
+        .product-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
+        .product-card { 
+            background: rgba(17, 17, 17, 0.9); border: 2px solid #D4AF37; 
+            border-radius: 15px; width: 280px; padding: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-
-        .gold { color: #D4AF37; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-
-        /* Style de la carte de livraison */
-        .card { 
-            background: rgba(17, 17, 17, 0.9); 
-            border: 2px solid #D4AF37; 
-            padding: 25px; 
-            border-radius: 20px; 
-            max-width: 450px; 
-            margin: 30px auto; 
-            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+        .product-card img { width: 100%; border-radius: 10px; height: 250px; object-fit: cover; border: 1px solid #333; }
+        select, input, textarea { 
+            width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; 
+            border: 1px solid #D4AF37; background: #000; color: #fff; font-size: 14px;
         }
-        
-        input, textarea { 
-            width: 90%; padding: 12px; margin: 10px 0; 
-            border: 1px solid #D4AF37; background: rgba(255, 255, 255, 0.1); 
-            color: #fff; border-radius: 8px; font-size: 16px;
-        }
-
+        .btn-select { background: #D4AF37; color: #000; border: none; padding: 10px; border-radius: 5px; font-weight: bold; cursor: pointer; width: 100%; }
         .btn-whatsapp { 
-            background: #25D366; color: white; padding: 18px 25px; 
-            border: none; border-radius: 50px; font-weight: bold; 
-            cursor: pointer; font-size: 18px; width: 100%; margin-top: 15px;
-            box-shadow: 0px 5px 15px rgba(37, 211, 102, 0.4);
+            background: #25D366; color: white; padding: 18px; border: none; 
+            border-radius: 50px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; font-size: 16px;
         }
-
-        .gallery img { 
-            width: 80%; max-width: 300px; border-radius: 15px; 
-            margin: 10px; border: 2px solid #D4AF37; 
-        }
-
-        .qr-section img { border: none; background: white; padding: 10px; border-radius: 10px; }
+        .final-card { max-width: 500px; margin: 40px auto; background: rgba(0,0,0,0.9); padding: 25px; border-radius: 20px; border: 2px solid #D4AF37; }
+        footer { margin-top: 40px; padding-bottom: 20px; font-size: 0.8em; opacity: 0.6; }
     </style>
 </head>
 <body>
 
 <div class="overlay">
-    <h1 class="gold" style="font-size: 2.5em;">NEK HAIR BEAUTY</h1>
-    <p style="font-style: italic;">L'élégance et le luxe pour vos cheveux</p>
+    <h1 class="gold">NEK HAIR BEAUTY</h1>
+    <p>Le Luxe Capillaire & Coiffure</p>
 
-    <div class="gallery">
-        <img src="photo1.jpg" alt="Coiffure 1">
-        <img src="photo2.jpg" alt="Coiffure 2">
+    <div class="product-grid">
+        <div class="product-card">
+            <img src="photo1.jpg" alt="Mèches 1">
+            <h3 class="gold">Mèches Brésiliennes</h3>
+            <select id="size1">
+                <option value="18 pouces">18 pouces</option>
+                <option value="20 pouces">20 pouces</option>
+                <option value="22 pouces">22 pouces</option>
+            </select>
+            <button class="btn-select" onclick="ajouter('Mèches Brésiliennes', 'size1')">Ajouter</button>
+        </div>
+
+        <div class="product-card">
+            <img src="photo2.jpg" alt="Mèches 2">
+            <h3 class="gold">Lace Frontal HD</h3>
+            <select id="size2">
+                <option value="14 pouces">14 pouces</option>
+                <option value="16 pouces">16 pouces</option>
+            </select>
+            <button class="btn-select" onclick="ajouter('Lace Frontal HD', 'size2')">Ajouter</button>
+        </div>
     </div>
 
-    <div class="card">
-        <h2 class="gold">🚚 Service Livraison</h2>
-        <p>Préparez votre commande WhatsApp :</p>
-        
-        <input type="text" id="nom_client" placeholder="Votre Nom complet" required>
-        <input type="text" id="adresse_client" placeholder="Adresse (Quartier, Avenue, N°)" required>
-        <textarea id="commande_client" rows="3" placeholder="Produits souhaités (ex: Mèches brésiliennes 22 pouces)"></textarea>
-        
-        <button onclick="validerCommande()" class="btn-whatsapp">
-            ✅ Envoyer la commande sur WhatsApp
-        </button>
+    <div class="final-card">
+        <h2 class="gold">Ma Commande</h2>
+        <textarea id="panier_total" readonly placeholder="Vos articles s'afficheront ici..."></textarea>
+        <input type="text" id="nom_cli" placeholder="Votre Nom complet">
+        <input type="text" id="adr_cli" placeholder="Adresse (Quartier/Avenue/N°)">
+        <button onclick="envoyer()" class="btn-whatsapp">🚀 Envoyer sur WhatsApp</button>
     </div>
 
-    <div class="qr-section">
-        <p class="gold">F
+    <div style="margin-top: 30px;">
+        <p class="gold">Scanner pour partager :</p>
+        <img src="qrcode.png" width="130" style="background:white; padding:8px; border-radius:10px;">
+    </div>
+
+    <footer>
+        © 2026 NEK HAIR BEAUTY - Tous droits réservés
+    </footer>
+</div>
+
+<script>
+    function ajouter(nom, idSize) {
+        var s = document.getElementById(idSize).value;
+        document.getElementById('panier_total').value += "- " + nom + " (" + s + ")\n";
+    }
+
+    function envoyer() {
+        var n = document.getElementById('nom_cli').value;
+        var a = document.getElementById('adr_cli').value;
+        var p = document.getElementById('panier_total').value;
+        var num = "243XXXXXXXXX"; // ⚠️ METS LE VRAI NUMÉRO ICI
+
+        if(n=="" || a=="" || p=="") {
+            alert("Veuillez remplir votre nom, adresse et choisir vos mèches.");
+            return;
+        }
+
+        var msg = "Bonjour *NEK HAIR BEAUTY*, voici ma commande :%0A%0A" +
+                  "*CLIENT :* " + encodeURIComponent(n) + "%0A" +
+                  "*ADRESSE :* " + encodeURIComponent(a) + "%0A" +
+                  "*COMMANDE :*%0A" + encodeURIComponent(p);
+
+        window.open("https://wa.me/" + num + "?text=" + msg, '_blank');
+    }
+</script>
+
+</body>
+</html>
