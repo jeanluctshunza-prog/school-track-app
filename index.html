@@ -3,144 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEK HAIR BEAUTY | Catalogue Officiel</title>
+    <title>NEK HAIR BEAUTY | Catalogue</title>
     <style>
-        body { background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; text-align: center; margin: 0; padding: 15px; }
+        body { background: #000 url('background.jpg') no-repeat center center fixed; background-size: cover; color: #fff; font-family: sans-serif; margin: 0; padding: 15px; text-align: center; }
+        .overlay { background: rgba(0,0,0,0.85); min-height: 100vh; width: 100%; position: fixed; top: 0; left: 0; z-index: -1; }
         .gold { color: #D4AF37; }
-        .container { max-width: 800px; margin: auto; }
-        .info-card { background: #111; border: 1px solid #D4AF37; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: left; font-size: 0.9em; line-height: 1.6; }
-        .product-card { background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; margin-bottom: 20px; text-align: left; }
-        .colors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #000; padding: 10px; border-radius: 8px; max-height: 150px; overflow-y: auto; border: 1px solid #222; }
-        label { display: block; margin: 5px 0; cursor: pointer; font-size: 0.85em; }
-        input[type="checkbox"], input[type="radio"] { accent-color: #D4AF37; margin-right: 10px; }
-        .cart-section { background: #0a0a0a; padding: 25px; border-radius: 20px; border: 2px solid #25D366; text-align: left; margin-top: 30px; }
-        input[type="text"], textarea, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #fff; box-sizing: border-box; font-size: 1em; }
-        .btn-whatsapp { background: #25D366; color: #fff; padding: 20px; border: none; border-radius: 50px; width: 100%; font-size: 1.2em; font-weight: bold; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
-        .footer-text { margin-top: 40px; padding: 20px; color: #777; font-size: 0.9em; border-top: 1px solid #222; }
+        .card { background: rgba(25,25,25,0.95); border: 1px solid #D4AF37; border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: left; }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; border: 1px solid #333; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+        .qty-box { background: #111; padding: 10px; border-radius: 5px; border: 1px dashed #D4AF37; display: flex; justify-content: space-between; align-items: center; }
+        input[type="number"] { width: 50px; background: #222; color: #fff; border: 1px solid #D4AF37; text-align: center; font-weight: bold; }
+        input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #333; background: #1a1a1a; color: #fff; box-sizing: border-box; }
+        .btn { background: #D4AF37; color: #000; padding: 18px; border: none; border-radius: 30px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1em; }
+        .btn-wa { background: #25D366; color: #fff; margin-top: 10px; }
+        #step2 { display: none; }
+        .qr { width: 130px; background: #fff; padding: 5px; margin-top: 20px; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="gold">NEK HAIR BEAUTY</h1>
+    <div class="overlay"></div>
+    <img src="logo.png" style="width:110px;">
+    <h1 class="gold">NEK HAIR BEAUTY</h1>
 
-        <div class="info-card">
-            📍 <b>Boutique :</b> Blvd Lumumba, Concession Kin Marché Debonhomme. <br>
-            <i>Réf : Station Engen avant le saut de mouton Debonhomme.</i> <br><br>
-            🚚 <b>Livraison :</b> Partout à Kinshasa (Dès 8000 FC). <br>
-            ⏱️ <b>Délai :</b> Livraison 1 heure après la commande.
-        </div>
-
-        <div class="product-card">
-            <h3 class="gold">French Curly (22 pouces uniquement)</h3>
-            <p>Cochez vos couleurs :</p>
-            <div class="colors-grid">
-                <label><input type="checkbox" name="p" value="French 1B"> 1B</label><label><input type="checkbox" name="p" value="French 24#"> 24#</label>
-                <label><input type="checkbox" name="p" value="French 27#"> 27#</label><label><input type="checkbox" name="p" value="French 30#"> 30#</label>
-                <label><input type="checkbox" name="p" value="French 33#"> 33#</label><label><input type="checkbox" name="p" value="French 350#"> 350#</label>
-                <label><input type="checkbox" name="p" value="French 613#"> 613#</label><label><input type="checkbox" name="p" value="French B29"> B29</label>
-                <label><input type="checkbox" name="p" value="French T33"> T33</label><label><input type="checkbox" name="p" value="French C14"> C14</label>
-                <label><input type="checkbox" name="p" value="French OT4-30"> OT4-30</label><label><input type="checkbox" name="p" value="French 30/33"> 30/33</label>
-                <label><input type="checkbox" name="p" value="French 27/613"> 27/613</label><label><input type="checkbox" name="p" value="French 30/613"> 30/613</label>
-                <label><input type="checkbox" name="p" value="French 27/33/613"> 27/33/613</label><label><input type="checkbox" name="p" value="French 4/27/613"> 4/27/613</label>
+    <div id="step1">
+        <div class="card">
+            <img src="photo1.jpg">
+            <b class="gold">French Curly (22") - 8$</b>
+            <div class="grid">
+                <label><input type="checkbox" name="prod" data-n="French" value="1B"> 1B</label>
+                <label><input type="checkbox" name="prod" data-n="French" value="27"> 27</label>
+                <label><input type="checkbox" name="prod" data-n="French" value="30"> 30</label>
+                <label><input type="checkbox" name="prod" data-n="French" value="350"> 350</label>
             </div>
+            <div class="qty-box">Quantité : <input type="number" id="q_french" value="1" min="1"></div>
         </div>
 
-        <div class="product-card">
-            <h3 class="gold">Mèches Lisses (22 pouces uniquement)</h3>
-            <p>Cochez vos couleurs :</p>
-            <div class="colors-grid">
-                <label><input type="checkbox" name="p" value="Lisse BUG"> BUG</label><label><input type="checkbox" name="p" value="Lisse 30/613"> 30/613</label>
-                <label><input type="checkbox" name="p" value="Lisse 27/613"> 27/613</label><label><input type="checkbox" name="p" value="Lisse 27/30/613"> 27/30/613</label>
-                <label><input type="checkbox" name="p" value="Lisse 350"> 350</label><label><input type="checkbox" name="p" value="Lisse 27"> 27</label>
-                <label><input type="checkbox" name="p" value="Lisse 1B"> 1B</label><label><input type="checkbox" name="p" value="Lisse 30/33"> 30/33</label>
-                <label><input type="checkbox" name="p" value="Lisse B29"> B29</label>
+        <div class="card">
+            <img src="photo2.jpg">
+            <b class="gold">Mèches Lisses (22") - 10$</b>
+            <div class="grid">
+                <label><input type="checkbox" name="prod" data-n="Lisse" value="1B"> 1B</label>
+                <label><input type="checkbox" name="prod" data-n="Lisse" value="BUG"> BUG</label>
             </div>
+            <div class="qty-box">Quantité : <input type="number" id="q_lisse" value="1" min="1"></div>
         </div>
 
-        <div class="product-card">
-            <h3 class="gold">Jumbo Hair (24 pouces uniquement)</h3>
-            <div class="colors-grid">
-                <label><input type="checkbox" name="p" value="Jumbo C14"> C14</label><label><input type="checkbox" name="p" value="Jumbo C15"> C15</label>
-                <label><input type="checkbox" name="p" value="Jumbo B29"> B29</label><label><input type="checkbox" name="p" value="Jumbo 27#"> 27#</label>
-                <label><input type="checkbox" name="p" value="Jumbo 24#"> 24#</label><label><input type="checkbox" name="p" value="Jumbo 30#"> 30#</label>
-                <label><input type="checkbox" name="p" value="Jumbo A37"> A37</label><label><input type="checkbox" name="p" value="Jumbo 33"> 33</label>
+        <div class="card">
+            <img src="photo3.jpg">
+            <b class="gold">Afro Kinky Bulk (Humain)</b>
+            <select id="a_size"><option>12 pouces</option><option>14 pouces</option><option>16 pouces</option></select>
+            <label style="display:block; margin:10px 0;"><input type="checkbox" id="a_check"> Noir Naturel</label>
+            <div class="qty-box">Quantité : <input type="number" id="q_afro" value="1" min="1"></div>
+        </div>
+
+        <div class="card">
+            <img src="photo4.jpg">
+            <b class="gold">Jumbo Hair (24") - 5$</b>
+            <div class="grid">
+                <label><input type="checkbox" name="prod" data-n="Jumbo" value="C14"> C14</label>
+                <label><input type="checkbox" name="prod" data-n="Jumbo" value="B29"> B29</label>
             </div>
+            <div class="qty-box">Quantité : <input type="number" id="q_jumbo" value="1" min="1"></div>
         </div>
 
-        <div class="product-card">
-            <h3 class="gold">Afro Kinky Bulk (100% Humain)</h3>
-            <p>Choisir la taille :</p>
-            <select id="afroSize">
-                <option value="12 pouces">12 pouces</option><option value="14 pouces">14 pouces</option>
-                <option value="16 pouces">16 pouces</option><option value="18 pouces">18 pouces</option>
+        <button class="btn" onclick="go2()">SUIVANT : COMMANDER ➔</button>
+    </div>
+
+    <div id="step2">
+        <div class="card">
+            <a href="#" onclick="go1()" style="color:#D4AF37; font-size: 0.9em;">← Retour au choix</a>
+            <h2 class="gold">Mes Coordonnées</h2>
+            <input type="text" id="nom" placeholder="Nom Complet">
+            <input type="text" id="tel" placeholder="N° Téléphone WhatsApp">
+            <input type="text" id="adr" placeholder="Adresse (Commune/Quartier/Avenue)">
+            <p>Mode de Paiement :</p>
+            <select id="pay">
+                <option>Cash à la livraison</option>
+                <option>M-Pesa (EUNICE NTUMBA - 0838789465)</option>
+                <option>Orange Money (EUNICE NTUMBA - 0840847260)</option>
             </select>
-            <label><input type="checkbox" id="afroCheck" value="Afro Noir Naturel"> Noir Naturel (Cocher pour sélectionner)</label>
-        </div>
-
-        <div class="cart-section">
-            <h3 class="gold" style="text-align:center;">Ma Commande</h3>
-            
-            <label><b>Votre Nom complet :</b></label>
-            <input type="text" id="nom" placeholder="Ex: Eunice Ntumba">
-
-            <label><b>Souhaitez-vous être livré ?</b></label>
-            <label><input type="radio" name="liv" value="OUI (Livraison)" checked> ✅ OUI</label>
-            <label><input type="radio" name="liv" value="NON (Récupération Salon)"> ❌ NON (Je passe au salon)</label>
-
-            <label><b>Tranche horaire de livraison :</b></label>
-            <select id="heure">
-                <option value="08h30 à 12h30">08h30 à 12h30</option>
-                <option value="12h30 à 15h30">12h30 à 15h30</option>
-                <option value="15h30 à 17h00">15h30 à 17h00</option>
-            </select>
-
-            <label><b>Mode de Paiement :</b></label>
-            <label><input type="radio" name="pay" value="Cash à la livraison" checked> 💵 Cash à la livraison</label>
-            <label><input type="radio" name="pay" value="M-Pesa (0838789465)"> 📱 M-Pesa (EUNICE NTUMBA - 0838789465)</label>
-            <label><input type="radio" name="pay" value="Orange Money (0840847260)"> 📱 Orange Money (EUNICE NTUMBA - 0840847260)</label>
-
-            <label><b>Adresse de livraison :</b></label>
-            <input type="text" id="adr" placeholder="Commune, Avenue, N°...">
-
-            <label><b>Détails / Mot pour la dame (Heure précise, etc.) :</b></label>
-            <textarea id="det" rows="3" placeholder="Ex: Madame, j'aimerais être livrée à 9h00 pile..."></textarea>
-
-            <button onclick="send()" class="btn-whatsapp">🚀 Envoyer la commande WhatsApp</button>
-        </div>
-
-        <div class="footer-text">
-            <b>Partager notre entreprise</b>
+            <textarea id="note" placeholder="Note (Heure préférée, etc.)"></textarea>
+            <button class="btn btn-wa" onclick="send()">🚀 ENVOYER SUR WHATSAPP</button>
         </div>
     </div>
 
+    <div style="margin: 30px 0;">
+        <p class="gold">Partager notre boutique</p>
+        <img src="qr_code.png" class="qr">
+    </div>
+
     <script>
+        function go2() { document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; window.scrollTo(0,0); }
+        function go1() { document.getElementById('step1').style.display='block'; document.getElementById('step2').style.display='none'; }
         function send() {
-            let n = document.getElementById('nom').value;
-            let a = document.getElementById('adr').value;
-            let d = document.getElementById('det').value;
-            let h = document.getElementById('heure').value;
-            let p = document.querySelector('input[name="pay"]:checked').value;
-            let l = document.querySelector('input[name="liv"]:checked').value;
-            let num = "243840847260"; // Numéro WhatsApp de l'entreprise
-
+            let n=document.getElementById('nom').value, t=document.getElementById('tel').value, a=document.getElementById('adr').value;
+            if(!n || !t || !a) return alert("Remplissez vos infos !");
             let items = "";
-            document.querySelectorAll('input[name="p"]:checked').forEach(c => { items += "• " + c.value + "%0A"; });
-            if(document.getElementById('afroCheck').checked) {
-                items += "• Afro Kinky (" + document.getElementById('afroSize').value + ")%0A";
-            }
-
-            if(!n || items === "") { alert("Veuillez entrer votre nom et sélectionner au moins un article."); return; }
-
-            let msg = "Bonjour *NEK HAIR BEAUTY*, voici ma commande :%0A%0A" +
-                      "*CLIENT :* " + encodeURIComponent(n) + "%0A" +
-                      "*PAIEMENT :* " + encodeURIComponent(p) + "%0A" +
-                      "*LIVRAISON :* " + encodeURIComponent(l) + "%0A" +
-                      "*HEURE :* " + encodeURIComponent(h) + "%0A" +
-                      "*ADRESSE :* " + encodeURIComponent(a) + "%0A%0A" +
-                      "*SÉLECTION :*%0A" + items + "%0A" +
-                      "*NOTES CLIENT :*%0A" + encodeURIComponent(d);
-
-            window.open("https://wa.me/" + num + "?text=" + msg, '_blank');
+            let f = []; document.querySelectorAll('input[data-n="French"]:checked').forEach(e=>f.push(e.value));
+            if(f.length>0) items += "*French Curly (x"+document.getElementById('q_french').value+"):* "+f.join(", ")+"%0A";
+            let l = []; document.querySelectorAll('input[data-n="Lisse"]:checked').forEach(e=>l.push(e.value));
+            if(l.length>0) items += "*Mèches Lisses (x"+document.getElementById('q_lisse').value+"):* "+l.join(", ")+"%0A";
+            let j = []; document.querySelectorAll('input[data-n="Jumbo"]:checked').forEach(e=>j.push(e.value));
+            if(j.length>0) items += "*Jumbo Hair (x"+document.getElementById('q_jumbo').value+"):* "+j.join(", ")+"%0A";
+            if(document.getElementById('a_check').checked) items += "*Afro Kinky (x"+document.getElementById('q_afro').value+"):* "+document.getElementById('a_size').value+"%0A";
+            let txt = "Bonjour *NEK HAIR BEAUTY*, commande de :%0A" + n + " ("+t+")%0A*Adresse:* "+a+"%0A%0A*Articles:*%0A"+items+"%0A*Paiement:* "+document.getElementById('pay').value;
+            window.open("https://wa.me/243840847260?text="+encodeURIComponent(txt));
         }
     </script>
 </body>
