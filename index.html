@@ -3,115 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEK HAIR & BEAUTY | Kinshasa</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>NEK HAIR BEAUTY | Officiel</title>
+    <style>
+        /* Configuration de l'image de fond */
+        body { 
+            background-image: url('background.jpg'); 
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed;
+            color: #fff; 
+            font-family: 'Segoe UI', sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
+        }
+
+        /* Superposition sombre pour lire le texte */
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .gold { color: #D4AF37; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+
+        /* Style de la carte de livraison */
+        .card { 
+            background: rgba(17, 17, 17, 0.9); 
+            border: 2px solid #D4AF37; 
+            padding: 25px; 
+            border-radius: 20px; 
+            max-width: 450px; 
+            margin: 30px auto; 
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        input, textarea { 
+            width: 90%; padding: 12px; margin: 10px 0; 
+            border: 1px solid #D4AF37; background: rgba(255, 255, 255, 0.1); 
+            color: #fff; border-radius: 8px; font-size: 16px;
+        }
+
+        .btn-whatsapp { 
+            background: #25D366; color: white; padding: 18px 25px; 
+            border: none; border-radius: 50px; font-weight: bold; 
+            cursor: pointer; font-size: 18px; width: 100%; margin-top: 15px;
+            box-shadow: 0px 5px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .gallery img { 
+            width: 80%; max-width: 300px; border-radius: 15px; 
+            margin: 10px; border: 2px solid #D4AF37; 
+        }
+
+        .qr-section img { border: none; background: white; padding: 10px; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <div class="background-overlay"></div>
 
-    <header>
-        <div class="header-content">
-            <img src="logo.jpg" alt="Logo NEK HAIR & BEAUTY" class="logo-img">
-            <h1>NEK HAIR & BEAUTY</h1>
-            <p class="slogan">"La beauté n'est pas un luxe, c'est un droit."</p>
-        </div>
-    </header>
+<div class="overlay">
+    <h1 class="gold" style="font-size: 2.5em;">NEK HAIR BEAUTY</h1>
+    <p style="font-style: italic;">L'élégance et le luxe pour vos cheveux</p>
 
-    <main>
-        <h2 class="section-title">Catalogue Premium</h2>
-        
-        <div class="product-slider">
-            
-            <div class="product-card">
-                <div class="price-tag">8 $</div>
-                <img src="photo1.jpg" alt="French Curly" class="p-img">
-                <h3>French Curly</h3>
-                <div class="option-group">
-                    <label>Longueur :</label>
-                    <select id="size-french" class="custom-select">
-                        <option value="22 pouces|8">22 pouces — 8 $</option>
-                    </select>
-                    <label>Couleur :</label>
-                    <input type="text" id="color-french" placeholder="Ex: Miel, Noir, 1B..." class="custom-input">
-                </div>
-                <button class="add-btn" onclick="ajouterProduitComplet('French Curl', 'size-french', 'color-french')">+ Ajouter</button>
-            </div>
-
-            <div class="product-card">
-                <div class="price-tag">10 $</div>
-                <img src="photo2.jpg" alt="Mèches lisses" class="p-img">
-                <h3>Mèches lisses</h3>
-                <div class="option-group">
-                    <label>Longueur :</label>
-                    <select id="size-lisses" class="custom-select">
-                        <option value="22 pouces|10">22 pouces — 10 $</option>
-                    </select>
-                    <label>Couleur :</label>
-                    <input type="text" id="color-lisses" placeholder="Ex: Blond, Brun..." class="custom-input">
-                </div>
-                <button class="add-btn" onclick="ajouterProduitComplet('Mèches lisses', 'size-lisses', 'color-lisses')">+ Ajouter</button>
-            </div>
-
-            <div class="product-card">
-                <div class="price-tag">5 $</div>
-                <img src="photo3.jpg" alt="Jumbo Hair" class="p-img">
-                <h3>Jumbo Hair</h3>
-                <div class="option-group">
-                    <label>Longueur :</label>
-                    <select id="size-jumbo" class="custom-select">
-                        <option value="24 pouces|5">24 pouces — 5 $</option>
-                    </select>
-                    <label>Couleur :</label>
-                    <input type="text" id="color-jumbo" placeholder="Ex: Noir/Miel..." class="custom-input">
-                </div>
-                <button class="add-btn" onclick="ajouterProduitComplet('Jumbo Hair', 'size-jumbo', 'color-jumbo')">+ Ajouter</button>
-            </div>
-
-            <div class="product-card">
-                <div class="price-tag" id="price-afro">20 $</div>
-                <img src="photo4.jpg" alt="Afro Kinky" class="p-img">
-                <h3>Afro Kinky</h3>
-                <div class="option-group">
-                    <label>Longueur :</label>
-                    <select id="size-afro" class="custom-select" onchange="document.getElementById('price-afro').innerText = this.value.split('|')[1] + ' $'">
-                        <option value="12 pouces|20">12 pouces — 20 $</option>
-                        <option value="14 pouces|25">14 pouces — 25 $</option>
-                        <option value="16 pouces|30">16 pouces — 30 $</option>
-                        <option value="18 pouces|35">18 pouces — 35 $</option>
-                    </select>
-                    <label>Couleur :</label>
-                    <input type="text" id="color-afro" placeholder="Quelle couleur ?" class="custom-input">
-                </div>
-                <button class="add-btn" onclick="ajouterProduitComplet('Afro Kinky', 'size-afro', 'color-afro')">+ Ajouter</button>
-            </div>
-
-        </div>
-
-        <section class="infos-container">
-            <div class="info-box">
-                <h4>🚀 Livraison Rapide</h4>
-                <p>Kinshasa : 1h après commande. Frais selon zone (Min: 8.000 FC).</p>
-            </div>
-            
-            <div class="info-box qr-box">
-                <h4>📸 Scanner & Partager</h4>
-                <img src="qrcode.png" alt="QR Code Boutique" class="qr-small">
-                <p class="small-text">Scannez pour revenir commander</p>
-            </div>
-
-            <div class="info-box">
-                <h4>💳 Paiement (EUNICE NTUMBA)</h4>
-                <p>M-Pesa : 0838789465 | Orange : 0840847260</p>
-            </div>
-        </section>
-    </main>
-
-    <div id="cart-bar" onclick="envoyerWhatsApp()">
-        <span>🛒 Mon Panier (<span id="count">0</span>)</span>
-        <span id="total">0 $</span>
+    <div class="gallery">
+        <img src="photo1.jpg" alt="Coiffure 1">
+        <img src="photo2.jpg" alt="Coiffure 2">
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="card">
+        <h2 class="gold">🚚 Service Livraison</h2>
+        <p>Préparez votre commande WhatsApp :</p>
+        
+        <input type="text" id="nom_client" placeholder="Votre Nom complet" required>
+        <input type="text" id="adresse_client" placeholder="Adresse (Quartier, Avenue, N°)" required>
+        <textarea id="commande_client" rows="3" placeholder="Produits souhaités (ex: Mèches brésiliennes 22 pouces)"></textarea>
+        
+        <button onclick="validerCommande()" class="btn-whatsapp">
+            ✅ Envoyer la commande sur WhatsApp
+        </button>
+    </div>
+
+    <div class="qr-section">
+        <p class="gold">F
