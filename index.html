@@ -13,151 +13,93 @@
         .card { background: var(--card); border: 1px solid var(--gold); border-radius: 15px; padding: 20px; margin-bottom: 25px; text-align: left; }
         .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; border: 1px solid #444; }
         
-        /* GRILLE COULEURS */
         .color-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #000; padding: 10px; border-radius: 8px; max-height: 180px; overflow-y: auto; border: 1px solid #222; margin: 10px 0; }
         .color-item { display: flex; align-items: center; font-size: 0.85em; cursor: pointer; }
         .color-item input { margin-right: 8px; accent-color: var(--gold); }
 
-        /* QUANTITÉ & INFOS */
         .qty-box { background: #111; padding: 12px; border-radius: 8px; border: 1px dashed var(--gold); display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
         .qty-input { width: 60px; background: #222; color: #fff; border: 1px solid var(--gold); text-align: center; padding: 5px; font-weight: bold; }
-        .info-txt { font-size: 0.85em; line-height: 1.5; margin: 10px 0; }
-
-        /* FORMULAIRE */
+        
         input[type="text"], select, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #fff; box-sizing: border-box; }
-        .btn { background: var(--gold); color: #000; padding: 18px; border: none; border-radius: 50px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1em; text-transform: uppercase; transition: 0.3s; }
-        .btn-wa { background: #25D366; color: #fff; margin-top: 15px; }
+        .btn { background: var(--gold); color: #000; padding: 18px; border: none; border-radius: 50px; width: 100%; font-weight: bold; cursor: pointer; font-size: 1.1em; text-transform: uppercase; }
         
         #step2 { display: none; }
-        .qr-section { margin: 40px 0; border-top: 1px solid #333; padding-top: 20px; }
-        .qr-img { width: 150px; background: #fff; padding: 10px; border-radius: 10px; margin: 15px auto; display: block; }
     </style>
 </head>
 <body>
     <div class="overlay"></div>
     <div class="container">
-        <img src="logo.png" style="width:120px; margin-top:10px;">
-        <h1 class="gold" style="margin-bottom:5px;">NEK HAIR BEAUTY</h1>
-        <p class="info-txt">📍 Debonhomme, Station ENGEN, Blvd Lumumba<br>🚚 Livraison Kinshasa (Dès 8000 FC) en 1h</p>
+        <h1 class="gold">NEK HAIR BEAUTY</h1>
+        <p>🚚 Livraison Kinshasa (8000 FC) en 1h</p>
 
         <div id="step1">
             <div class="card">
                 <img src="photo1.jpg">
                 <b class="gold">French Curly (22") - 8$</b>
+                <p style="font-size:0.8em;">Sélectionnez vos couleurs :</p>
                 <div class="color-grid">
                     <label class="color-item"><input type="checkbox" name="f_c" value="1B"> 1B</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="24#"> 24#</label>
                     <label class="color-item"><input type="checkbox" name="f_c" value="27#"> 27#</label>
                     <label class="color-item"><input type="checkbox" name="f_c" value="30#"> 30#</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="33#"> 33#</label>
                     <label class="color-item"><input type="checkbox" name="f_c" value="350#"> 350#</label>
                     <label class="color-item"><input type="checkbox" name="f_c" value="613#"> 613#</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="B29"> B29</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="T33"> T33</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="C14"> C14</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="OT4-30"> OT4-30</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="30/33"> 30/33</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="27/613"> 27/613</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="30/613"> 30/613</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="27/33/613"> 27/33/613</label>
-                    <label class="color-item"><input type="checkbox" name="f_c" value="4/27/613"> 4/27/613</label>
                 </div>
-                <div class="qty-box">Quantité : <input type="number" id="q_f" class="qty-input" value="1" min="1"></div>
-            </div>
-
-            <div class="card">
-                <img src="photo2.jpg">
-                <b class="gold">Mèches Lisses (22") - 10$</b>
-                <div class="color-grid">
-                    <label class="color-item"><input type="checkbox" name="l_c" value="BUG"> BUG</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="30/613"> 30/613</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="27/613"> 27/613</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="27/30/613"> 27/30/613</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="350"> 350</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="27"> 27</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="1B"> 1B</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="30/33"> 30/33</label>
-                    <label class="color-item"><input type="checkbox" name="l_c" value="B29"> B29</label>
-                </div>
-                <div class="qty-box">Quantité : <input type="number" id="q_l" class="qty-input" value="1" min="1"></div>
-            </div>
-
-            <div class="card">
-                <img src="photo4.jpg">
-                <b class="gold">Jumbo Hair (24") - 5$</b>
-                <div class="color-grid">
-                    <label class="color-item"><input type="checkbox" name="j_c" value="C14"> C14</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="C15"> C15</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="B29"> B29</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="27#"> 27#</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="24#"> 24#</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="30#"> 30#</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="A37"> A37</label>
-                    <label class="color-item"><input type="checkbox" name="j_c" value="33"> 33</label>
-                </div>
-                <div class="qty-box">Quantité : <input type="number" id="q_j" class="qty-input" value="1" min="1"></div>
+                <div class="qty-box">Quantité souhaitée : <input type="number" id="q_f" class="qty-input" placeholder="0"></div>
             </div>
 
             <div class="card">
                 <img src="photo3.jpg">
                 <b class="gold">Afro Kinky Bulk (100% Humain)</b>
-                <select id="a_s"><option>12 pouces</option><option>14 pouces</option><option>16 pouces</option><option>18 pouces</option></select>
+                <select id="a_s">
+                    <option value="12 pouces (80$)">12 pouces - 80$</option>
+                    <option value="14 pouces (90$)">14 pouces - 90$</option>
+                    <option value="16 pouces (100$)">16 pouces - 100$</option>
+                    <option value="18 pouces (110$)">18 pouces - 110$</option>
+                </select>
                 <label style="display:block; margin:10px 0;"><input type="checkbox" id="a_c"> Noir Naturel</label>
-                <div class="qty-box">Quantité : <input type="number" id="q_a" class="qty-input" value="1" min="1"></div>
+                <div class="qty-box">Quantité souhaitée : <input type="number" id="q_a" class="qty-input" placeholder="0"></div>
             </div>
 
-            <button class="btn" onclick="go2()">Continuer vers la livraison ➔</button>
+            <button class="btn" onclick="go2()">Continuer vers le panier ➔</button>
         </div>
 
         <div id="step2">
             <div class="card">
-                <a href="#" onclick="go1()" style="color:var(--gold); font-size:0.9em;">← Retour au catalogue</a>
                 <h3 class="gold">Finaliser la commande</h3>
                 <input type="text" id="n" placeholder="Nom Complet">
                 <input type="text" id="t" placeholder="N° WhatsApp">
-                <input type="text" id="a" placeholder="Adresse exacte (Livraison)">
+                <input type="text" id="a" placeholder="Adresse exacte de livraison">
                 
-                <p class="info-txt">Mode de Paiement :</p>
-                <select id="p">
-                    <option>Cash à la livraison</option>
-                    <option>M-Pesa (EUNICE NTUMBA : 0838789465)</option>
-                    <option>Orange Money (EUNICE NTUMBA : 0840847260)</option>
-                </select>
-
-                <p class="info-txt">Tranche horaire souhaitée :</p>
+                <p>Heure de livraison :</p>
                 <select id="h">
                     <option>08h30 - 12h30</option>
                     <option>12h30 - 15h30</option>
                     <option>15h30 - 17h00</option>
                 </select>
 
-                <textarea id="m" rows="3" placeholder="Notes (ex: livrer vers 10h)"></textarea>
-                <button class="btn btn-wa" onclick="send()">🚀 Commander sur WhatsApp</button>
+                <textarea id="m" rows="3" placeholder="Notes (ex: livrer à 9h précise)"></textarea>
+                <button class="btn" style="background:#25D366; color:white;" onclick="send()">🚀 Envoyer la sélection</button>
             </div>
-        </div>
-
-        <div class="qr-section">
-            <p class="gold"><b>PARTAGER NOTRE ENTREPRISE</b></p>
-            <img src="qr_code.png" class="qr-img">
         </div>
     </div>
 
     <script>
         function go2() { document.getElementById('step1').style.display='none'; document.getElementById('step2').style.display='block'; window.scrollTo(0,0); }
-        function go1() { document.getElementById('step1').style.display='block'; document.getElementById('step2').style.display='none'; }
         function send() {
-            let nom=document.getElementById('n').value, tel=document.getElementById('t').value, adr=document.getElementById('a').value;
-            if(!nom || !tel || !adr) return alert("Remplissez vos coordonnées !");
+            let nom=document.getElementById('n').value, adr=document.getElementById('a').value;
+            if(!nom || !adr) return alert("Remplissez vos infos !");
+            
             let res = "";
             let f=[]; document.querySelectorAll('input[name="f_c"]:checked').forEach(e=>f.push(e.value));
-            if(f.length>0) res += "*French Curly (x"+document.getElementById('q_f').value+"):* "+f.join(", ")+"%0A";
-            let l=[]; document.querySelectorAll('input[name="l_c"]:checked').forEach(e=>l.push(e.value));
-            if(l.length>0) res += "*Mèches Lisses (x"+document.getElementById('q_l').value+"):* "+l.join(", ")+"%0A";
-            let j=[]; document.querySelectorAll('input[name="j_c"]:checked').forEach(e=>j.push(e.value));
-            if(j.length>0) res += "*Jumbo Hair (x"+document.getElementById('q_j').value+"):* "+j.join(", ")+"%0A";
-            if(document.getElementById('a_c').checked) res += "*Afro Kinky (x"+document.getElementById('q_a').value+"):* "+document.getElementById('a_s').value+" (Noir Naturel)%0A";
+            if(f.length>0 && document.getElementById('q_f').value > 0) 
+                res += "*French Curly (x"+document.getElementById('q_f').value+"):* " + f.join(", ") + "%0A";
             
-            let txt = "Bonjour *NEK HAIR BEAUTY*, nouvelle commande de :%0A" + nom + " ("+tel+")%0A*Lieu:* "+adr+"%0A%0A*CHOIX:*%0A"+res+"%0A*PAIEMENT:* "+document.getElementById('p').value+"%0A*HEURE:* "+document.getElementById('h').value+"%0A*NOTE:* "+document.getElementById('m').value;
+            if(document.getElementById('a_c').checked && document.getElementById('q_a').value > 0)
+                res += "*Afro Kinky (x"+document.getElementById('q_a').value+"):* " + document.getElementById('a_s').value + "%0A";
+
+            let txt = "Bonjour *NEK HAIR BEAUTY*, voici ma sélection de panier :%0A%0A" + 
+                      "*Client:* " + nom + "%0A*Lieu:* " + adr + "%0A%0A*ARTICLES SELECTIONNÉS :*%0A" + res + 
+                      "%0A*Heure souhaitée:* " + document.getElementById('h').value;
             window.open("https://wa.me/243840847260?text="+encodeURIComponent(txt));
         }
     </script>
