@@ -7,92 +7,235 @@
   <title>SchoolTrack Premium — Cinematic Experience</title>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
+    /* --- VARIABLES D'AMBIANCE CINÉMATOGRAPHIQUE --- */
     :root {
-      --bg: #020617; 
-      --card: rgba(255, 255, 255, 0.03); 
+      --bg: #030712; 
+      --card: rgba(15, 23, 42, 0.45); /* Plus sombre et immersif pour l'effet Glassmorphism */
       --accent: #00D2FF; 
       --success: #00FF94; 
       --danger: #FF3D71;
+      --neon-shadow: 0 0 20px rgba(0, 210, 255, 0.25);
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu moche au clic sur mobile */
+    }
     
     body {
       background: var(--bg); 
-      color: #E2E8F0; 
-      font-family: 'Inter', sans-serif;
+      color: #F3F4F6; 
       min-height: 100vh; 
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      overflow: hidden;
+      padding: 16px; /* Évite que l'app touche les bords de l'écran sur mobile */
+      position: relative;
+      overflow-x: hidden;
     }
     
+    /* Écran de fond type cinéma (Aurora effect flouté) */
     body::before {
       content: ""; 
       position: fixed; 
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.07) 0%, transparent 70%); 
+      top: -10%; left: -10%; width: 120%; height: 120%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 148, 0.04) 0%, transparent 50%); 
       z-index: -1;
     }
 
+    /* --- CONTENEUR GLASSMORPHISM OPTIMISÉ MOBILE --- */
     .glass {
       background: var(--card); 
-      backdrop-filter: blur(20px); 
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1); 
-      border-radius: 30px; 
-      padding: 40px;
-      width: 90%; 
-      max-width: 500px; 
+      backdrop-filter: blur(24px); 
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08); 
+      border-radius: 24px; /* Un poil plus arrondi pour le look premium mobile */
+      padding: 32px 24px; /* Remplissage adapté : respirant sur PC, parfait sur écran de téléphone */
+      width: 100%; 
+      max-width: 440px; /* Largeur idéale pour ressembler à une appli native sur smartphone */
       text-align: center; 
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      box-shadow: 
+        0 4px 30px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1); /* Ligne lumineuse cinéma interne */
     }
 
-    h1 { font-family: 'Rajdhani'; font-size: 3rem; letter-spacing: 5px; color: #fff; text-transform: uppercase; margin-bottom: 10px; }
-    .tagline { font-size: 0.8rem; letter-spacing: 3px; opacity: 0.5; margin-bottom: 40px; }
+    /* --- TYPOGRAPHIE SCI-FI --- */
+    h1 { 
+      font-family: 'Rajdhani', sans-serif; 
+      font-weight: 700;
+      font-size: 2.4rem; /* Légèrement réduit pour éviter qu'il passe sur 2 lignes sur petit mobile */
+      letter-spacing: 4px; 
+      color: #fff; 
+      text-transform: uppercase; 
+      margin-bottom: 6px;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+    }
+    
+    .tagline { 
+      font-size: 0.75rem; 
+      letter-spacing: 2px; 
+      opacity: 0.5; 
+      margin-bottom: 35px; 
+      text-transform: uppercase;
+    }
 
-    /* Sections de l'application */
-    .section { display: none; animation: fadeIn 0.4s ease forwards; }
+    /* --- SECTIONS --- */
+    .section { display: none; animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
     .active { display: block; }
 
-    /* Boutons de choix d'option (Accueil) */
+    /* --- BOUTONS CHOIX DE MENU (Effet Néon Réactif) --- */
     .menu-btn {
-      width: 100%; padding: 25px; margin-bottom: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.02); color: #fff; cursor: pointer; transition: 0.3s; text-align: left;
-      display: flex; align-items: center; gap: 20px;
+      width: 100%; 
+      padding: 20px; 
+      margin-bottom: 16px; 
+      border-radius: 16px; 
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.02); 
+      color: #fff; 
+      cursor: pointer; 
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
+      text-align: left;
+      display: flex; 
+      align-items: center; 
+      gap: 16px;
     }
-    .menu-btn:hover { background: rgba(0, 210, 255, 0.1); border-color: var(--accent); transform: scale(1.02); }
-    .menu-btn i { font-size: 1.5rem; color: var(--accent); font-style: normal; }
-    .menu-btn div b { display: block; font-size: 1.1rem; }
-    .menu-btn div span { font-size: 0.8rem; opacity: 0.6; }
+    
+    /* Animation cinématique au survol / au toucher mobile */
+    .menu-btn:hover, .menu-btn:active { 
+      background: rgba(0, 210, 255, 0.06); 
+      border-color: var(--accent); 
+      box-shadow: var(--neon-shadow);
+      transform: translateY(-2px); 
+    }
+    
+    .menu-btn i { font-size: 1.4rem; color: var(--accent); font-style: normal; }
+    .menu-btn div b { display: block; font-size: 1.05rem; margin-bottom: 2px; }
+    .menu-btn div span { display: block; font-size: 0.8rem; opacity: 0.5; line-height: 1.2; }
 
-    /* Inputs de saisie matricule */
+    /* --- CHAMP Saisie Matricule (Look Borne Épuré) --- */
     .input-box {
-      width: 100%; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 15px; padding: 20px; color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 20px; outline: none;
+      width: 100%; 
+      background: rgba(0, 0, 0, 0.4); 
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px; 
+      padding: 16px; 
+      color: #fff; 
+      font-size: 1.35rem; /* Ajusté pour éviter le zoom automatique forcé sur iPhone */
+      text-align: center; 
+      margin-bottom: 16px; 
+      outline: none;
+      font-weight: 600;
+      letter-spacing: 2px;
+      transition: all 0.25s ease;
     }
-    .input-box:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0, 210, 255, 0.3); }
+    .input-box:focus { 
+      border-color: var(--accent); 
+      box-shadow: var(--neon-shadow);
+      background: rgba(0, 0, 0, 0.6);
+    }
 
-    /* Boutons d'action */
+    /* --- BOUTONS D'ACTION (Gros et faciles à cliquer avec le pouce) --- */
     .btn-action {
-      width: 100%; padding: 20px; border-radius: 15px; border: none; font-weight: 700; cursor: pointer;
-      text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+      width: 100%; 
+      padding: 18px; 
+      border-radius: 14px; 
+      border: none; 
+      font-weight: 700; 
+      cursor: pointer;
+      text-transform: uppercase; 
+      letter-spacing: 2px; 
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-blue { background: var(--accent); color: #000; }
-    .btn-white { background: #fff; color: #000; }
-    .btn-next { background: var(--success); color: #000; margin-top: 15px; display: none; }
+    
+    /* Effet d'enfoncement réaliste quand on appuie sur téléphone */
+    .btn-action:active { transform: scale(0.98); }
+    
+    .btn-blue { 
+      background: var(--accent); 
+      color: #020617; 
+      box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
+    }
+    .btn-blue:hover { box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
+    
+    .btn-white { 
+      background: #FFFFFF; 
+      color: #020617; 
+      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
+    }
+    .btn-white:hover { box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); }
+    
+    .btn-next { 
+      background: var(--success); 
+      color: #020617; 
+      margin-top: 16px; 
+      display: none; 
+      box-shadow: 0 4px 14px rgba(0, 255, 148, 0.2);
+    }
 
-    .back-link { display: block; margin-top: 25px; color: var(--accent); cursor: pointer; font-size: 0.9rem; text-decoration: underline; }
+    .back-link { 
+      display: inline-block; 
+      margin-top: 24px; 
+      color: var(--accent); 
+      cursor: pointer; 
+      font-size: 0.85rem; 
+      text-decoration: none; 
+      letter-spacing: 1px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; text-shadow: var(--neon-shadow); }
 
+    /* --- ÉCRANS DE RÉSULTATS AVEC LUMIÈRE AMBIANTE (Glow) --- */
     .result-screen {
-      margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);
+      margin-top: 24px; 
+      padding: 18px; 
+      border-radius: 14px; 
+      background: rgba(0, 0, 0, 0.3); 
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      transition: all 0.3s ease;
     }
-    .success { color: var(--success); border-color: var(--success); background: rgba(0, 255, 148, 0.05); }
-    .danger { color: var(--danger); border-color: var(--danger); background: rgba(255, 61, 113, 0.05); }
-    .warning { color: #FFD93D; border-color: #FFD93D; background: rgba(255, 217, 61, 0.05); }
+    
+    .success { 
+      color: var(--success); 
+      border-color: rgba(0, 255, 148, 0.4); 
+      background: rgba(0, 255, 148, 0.03); 
+      box-shadow: 0 0 15px rgba(0, 255, 148, 0.1);
+    }
+    .danger { 
+      color: var(--danger); 
+      border-color: rgba(255, 61, 113, 0.4); 
+      background: rgba(255, 61, 113, 0.03); 
+      box-shadow: 0 0 15px rgba(255, 61, 113, 0.1);
+    }
+    .warning { 
+      color: #FFD93D; 
+      border-color: rgba(255, 217, 61, 0.4); 
+      background: rgba(255, 217, 61, 0.03); 
+      box-shadow: 0 0 15px rgba(255, 217, 61, 0.1);
+    }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    /* --- ANIMATION CINÉMATIQUE ULTRA-FLUIDE --- */
+    @keyframes scaleIn { 
+      from { opacity: 0; transform: scale(0.96) translateY(6px); } 
+      to { opacity: 1; transform: scale(1) translateY(0); } 
+    }
+
+    /* --- AJUSTEMENTS POUR TRÈS PETITS ÉCRANS TÉLÉPHONES --- */
+    @media (max-width: 360px) {
+      h1 { font-size: 2rem; letter-spacing: 2px; }
+      .glass { padding: 24px 16px; }
+      .menu-btn { padding: 16px; }
+    }
   </style>
 </head>
 <body>
