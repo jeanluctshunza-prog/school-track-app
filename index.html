@@ -141,13 +141,13 @@
         if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
       });
 
-      // --- 2. RECONSTITUTION SÉCURISÉE DE L'URL (Fini les bugs de réseau) ---
+      // --- 2. RECONSTITUTION DE TON URL EXACTE (Correction des deux S) ---
       const part1 = "https://script.google.com/macros/s/";
-      const part2 = "AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg";
+      const part2 = "AKfycby2mFSLapd4VoweeSSsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg";
       const part3 = "/exec";
       const _0x5c3d = part1 + part2 + part3;
 
-      // Textes de l'interface
+      // Textes de l'interface masqués
       const _0x1a2b = [
         "action=checkIn&code=",
         "action=parentSearch&code=",
@@ -237,7 +237,7 @@
         }
       };
 
-      // Auto-clear console
+      // Nettoyage automatique console
       setInterval(function() { console.clear(); }, 300);
     })();
   </script>
