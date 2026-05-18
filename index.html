@@ -106,6 +106,40 @@
         @keyframes viewSlideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
+    <script>
+  // 1. Bloquer le clic droit sur tout el site
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    alert("Sécurité : Le clic droit est désactivé sur cette application.");
+  });
+
+  // 2. Bloquer les raccourcis clavier (F12, Ctrl+U, Ctrl+Shift+I)
+  document.addEventListener('keydown', function(e) {
+    // Bloquer F12
+    if (e.key === "F12") {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Bloquer CTRL + U (Code source)
+    if (e.ctrlKey && e.key === 'u') {
+      e.preventDefault();
+      return false;
+    }
+
+    // Bloquer CTRL + SHIFT + I (Inspecter l'élément)
+    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Bloquer CTRL + SHIFT + J (Console)
+    if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+      e.preventDefault();
+      return false;
+    }
+  });
+</script>
 <body>
 
     <div id="splash-screen">
