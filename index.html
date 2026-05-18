@@ -130,21 +130,47 @@
     </div>
   </div>
 
- <script>
+<script>
     (function() {
-      // Tableau de chaînes encodées en hexadécimal pour masquer les textes sensibles et l'URL
+      // --- 1. SÉCURITÉ ET BLINDAGE CLAVIER / SOURIS (Clic droit, F12, Ctrl+U, Ctrl+S) ---
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', function(e) {
+        // Désactivation de F12
+        if (e.key === "F12") {
+          e.preventDefault();
+          return false;
+        }
+        // Désactivation de Ctrl+U et Ctrl+u (Code source)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+          e.preventDefault();
+          return false;
+        }
+        // Désactivation de Ctrl+Maj+I / J (Inspecteurs de code)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) {
+          e.preventDefault();
+          return false;
+        }
+        // Désactivation de Ctrl+S (Sauvegarde de la page HTML brute)
+        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      // --- 2. TABLEAU CONFIGURATION AVEC DONNÉES ET URL ENCODÉES (Hexadécimal) ---
       const _0x1a2b = [
-        "\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x79\x32\x6d\x46\x53\x4c\x61\x70\x64\x34\x56\x6f\x77\x65\x65\x53\x53\x73\x58\x4e\x33\x61\x54\x32\x6c\x42\x39\x64\x57\x68\x63\x75\x47\x76\x4c\x79\x34\x47\x33\x72\x42\x4c\x50\x37\x6d\x34\x67\x70\x74\x5f\x37\x75\x61\x68\x6f\x34\x54\x43\x74\x41\x4b\x6b\x4d\x48\x68\x79\x67\x2f\x65\x78\x65\x63", // API_URL
+        "\x68\x74\x74\x70\x73\x3a\x2f\x2f\x73\x63\x72\x69\x70\x74\x2e\x67\x6f\x6f\x67\x6c\x65\x2e\x63\x6f\x6d\x2f\x6d\x61\x63\x72\x6f\x73\x2f\x73\x2f\x41\x4b\x66\x79\x63\x62\x79\x32\x6d\x46\x53\x4c\x61\x70\x64\x34\x56\x6f\x77\x65\x65\x53\x53\x73\x58\x4e\x33\x61\x54\x32\x6c\x42\x39\x64\x57\x68\x63\x75\x47\x76\x4c\x79\x34\x47\x33\x72\x42\x4c\x50\x37\x6d\x34\x67\x70\x74\x5f\x37\x75\x61\x68\x6f\x34\x54\x43\x74\x41\x4b\x6b\x4d\x48\x68\x79\x67\x2f\x65\x78\x65\x63", // URL Google Apps Script cachée
         "\x61\x63\x74\x69\x6f\x6e\x3d\x63\x68\x65\x63\x6b\x49\x6e\x26\x63\x6f\x64\x65\x3d", // action=checkIn&code=
         "\x61\x63\x74\x69\x6f\x6e\x3d\x70\x61\x72\x65\x6e\x74\x53\x65\x61\x72\x63\x68\x26\x63\x6f\x64\x65\x3d", // action=parentSearch&code=
         "\x56\x4c\x52\x49\x46\x49\x43\x41\x54\x49\x4f\x4e\x20\x53\x45\x43\x55\x52\x49\x53\x45\x45\x2e\x2e\x2e", // VÉRIFICATION SÉCURISÉE...
-        "\x52\x45\x43\x48\x45\x52\x43\x48\x45\x20\x44\x41\x4e\x53\x20\x4c\x45\x20\x52\x45\x47\x49\x53\x54\x52\x45\x20\x44\x49\x4f\x43\x45\x53\x41\x49\x4e\x2e\x2e\x2e", // RECHERCHE DANS LE REGISTRE DIOCÉSAIN...
+        "\x52\x45\x43\x48\x45\x52\x43\x48\x45\x20\x44\x41\x4e\x53\x20\x4c\x45\x20\x52\x45\x67\x49\x53\x54\x52\x45\x20\x44\x49\x4f\x43\x45\x53\x41\x49\x4e\x2e\x2e\x2e", // RECHERCHE DANS LE REGISTRE DIOCÉSAIN...
         "\x45\x52\x52\x45\x55\x52\x20\x44\x45\x20\x53\x59\x4e\x43\x20\x53\x45\x52\x56\x45\x52", // ERREUR DE SYNC SERVEUR
         "\x45\x52\x52\x45\x55\x52\x20\x52\x45\x53\x45\x41\x55\x20\x53\x55\x52\x20\x4c\x41\x20\x42\x41\x53\x45" // ERREUR RÉSEAU SUR LA BASE
       ];
 
       const _0x5c3d = _0x1a2b[0];
 
+      // --- 3. LOGIQUE COMMUNE DE NAVIGATION ---
       window['showSection'] = function(_0x2b3c) {
         document.querySelectorAll('.section').forEach(_0x4e5f => _0x4e5f.classList.remove('active'));
         document.getElementById(_0x2b3c).classList.add('active');
@@ -155,6 +181,7 @@
         }
       };
 
+      // --- 4. ACTION DE LA BORNE ÉLÈVE ---
       window['submitBorne'] = async function() {
         const _0x11aa = document.getElementById('borneInput');
         const _0x22bb = document.getElementById('borneResult');
@@ -192,6 +219,7 @@
         document.getElementById('borneInput').focus();
       };
 
+      // --- 5. SUIVI DE L'ESPACE PARENT ---
       window['submitParent'] = async function() {
         const _0x88bb = document.getElementById('parentInput');
         const _0x99cc = document.getElementById('parentResult');
@@ -224,12 +252,10 @@
         }
       };
 
-      document.addEventListener('contextmenu', _0x55fa => _0x55fa.preventDefault());
-      document.addEventListener('keydown', _0x66fb => {
-        if (_0x66fb.key === "F12" || (_0x66fb.ctrlKey && (_0x66fb.key === 'u' || _0x66fb.shiftKey && (_0x66fb.key === 'I' || _0x66fb.key === 'J')))) {
-          _0x66fb.preventDefault();
-        }
-      });
+      // --- 6. NETTOYAGE AUTO DE LA CONSOLE SI ELLE EST FORCÉE ---
+      setInterval(function() {
+        console.clear();
+      }, 300);
     })();
   </script>
 </body>
