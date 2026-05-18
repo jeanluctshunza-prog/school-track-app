@@ -132,7 +132,7 @@
 
 <script>
     (function() {
-      // --- 1. SÉCURITÉ CLAVIER / SOURIS (Clic droit, F12, Ctrl+U, Ctrl+S) ---
+      // 🔒 1. PROTECTIONS CLIENTS (Blocage F12, Ctrl+U, Inspecteur, Clic droit)
       document.addEventListener('contextmenu', e => e.preventDefault());
       document.addEventListener('keydown', function(e) {
         if (e.key === "F12") { e.preventDefault(); return false; }
@@ -141,58 +141,44 @@
         if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
       });
 
-      // --- 2. RECONSTITUTION DE L'URL EXACTE AVEC LE "S5Ss" ---
-      const part1 = "https://script.google.com/macros/s/";
-      const part2 = "AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg";
-      const part3 = "/exec";
-      const _0x5c3d = part1 + part2 + part3;
+      // 🔗 2. CONFIGURATION DE L'URL API EXACTE
+      const _0x5c3d = "https://script.google.com/macros/s/AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg/exec";
 
-      // Textes de l'interface masqués
-      const _0x1a2b = [
-        "action=checkIn&code=",
-        "action=parentSearch&code=",
-        "VÉRIFICATION SÉCURISÉE...",
-        "RECHERCHE DANS LE REGISTRE DIOCÉSAIN..."
-      ];
-
-      // --- 3. LOGIQUE INTERFACE ---
-      window['showSection'] = function(_0x2b3c) {
-        document.querySelectorAll('.section').forEach(_0x4e5f => _0x4e5f.classList.remove('active'));
-        document.getElementById(_0x2b3c).classList.add('active');
-        if (_0x2b3c === 'borne-section') {
-          document.getElementById('borneInput').focus();
-        } else if (_0x2b3c === 'parent-section') {
-          document.getElementById('parentInput').focus();
-        }
+      // --- 3. NAVIGATION INTERFACE ---
+      window['showSection'] = function(id) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        const inputId = id === 'borne-section' ? 'borneInput' : (id === 'parent-section' ? 'parentInput' : null);
+        if(inputId) document.getElementById(inputId).focus();
       };
 
-      // --- 4. ACTION BORNE ---
+      // --- 4. GESTION DE LA BORNE (CHECK-IN) ---
       window['submitBorne'] = async function() {
-        const _0x11aa = document.getElementById('borneInput');
-        const _0x22bb = document.getElementById('borneResult');
-        const _0x33cc = document.getElementById('btnNext');
-        const _0x44dd = _0x11aa.value.trim();
-        if (!_0x44dd) return;
+        const input = document.getElementById('borneInput');
+        const res = document.getElementById('borneResult');
+        const next = document.getElementById('btnNext');
+        const val = input.value.trim();
+        if (!val) return;
 
-        _0x22bb.innerHTML = _0x1a2b[2];
+        res.innerHTML = "VÉRIFICATION SÉCURISÉE...";
         try {
-          const _0x55ee = await fetch(`${_0x5c3d}?${_0x1a2b[0]}${_0x44dd}`);
-          const _0x66ff = await _0x55ee.json();
+          const response = await fetch(`${_0x5c3d}?action=checkIn&code=${val}`);
+          const data = await response.json();
 
-          if (_0x66ff.status === "SUCCESS") {
-            _0x22bb.className = "result-screen success";
-            _0x22bb.innerHTML = `<b>✅ ENTRÉE VALIDÉE</b><br>${_0x66ff.nom}<br><span style="font-size:0.9rem; opacity:0.8;">${_0x66ff.classe}</span>`;
-            _0x33cc.style.display = "block";
-          } else if (_0x66ff.status === "EXPIRED") {
-            _0x22bb.className = "result-screen warning";
-            _0x22bb.innerHTML = `<b>⚠️ ACCÈS DUPLICATÉ OU ABO EXPIRÉ</b><br>${_0x66ff.nom}`;
+          if (data.status === "SUCCESS") {
+            res.className = "result-screen success";
+            res.innerHTML = `<b>✅ ENTRÉE VALIDÉE</b><br>${data.nom}<br><span style="font-size:0.9rem; opacity:0.8;">${data.classe}</span>`;
+            next.style.display = "block";
+          } else if (data.status === "EXPIRED") {
+            res.className = "result-screen warning";
+            res.innerHTML = `<b>⚠️ ACCÈS DUPLICATÉ OU ABO EXPIRÉ</b><br>${data.nom}`;
           } else {
-            _0x22bb.className = "result-screen danger";
-            _0x22bb.innerHTML = `<b>❌ CODE INVALIDE</b><br>Absent de la base élève.`;
+            res.className = "result-screen danger";
+            res.innerHTML = `<b>❌ CODE INVALIDE</b><br>Absent de la base élève.`;
           }
         } catch (e) {
-          _0x22bb.className = "result-screen danger";
-          _0x22bb.innerHTML = "ERREUR DE SYNC SERVEUR";
+          res.className = "result-screen danger";
+          res.innerHTML = "ERREUR DE SYNC SERVEUR";
         }
       };
 
@@ -204,40 +190,40 @@
         document.getElementById('borneInput').focus();
       };
 
-      // --- 5. ESPACE PARENT ---
+      // --- 5. ESPACE SUIVI PARENT ---
       window['submitParent'] = async function() {
-        const _0x88bb = document.getElementById('parentInput');
-        const _0x99cc = document.getElementById('parentResult');
-        const _0x11bc = _0x88bb.value.trim();
-        if (!_0x11bc) return;
+        const input = document.getElementById('parentInput');
+        const res = document.getElementById('parentResult');
+        const val = input.value.trim();
+        if (!val) return;
 
-        _0x99cc.innerHTML = _0x1a2b[3];
+        res.innerHTML = "RECHERCHE DANS LE REGISTRE DIOCÉSAIN...";
         try {
-          const _0x22cd = await fetch(`${_0x5c3d}?${_0x1a2b[1]}${_0x11bc}`);
-          const _0x33de = await _0x22cd.json();
+          const response = await fetch(`${_0x5c3d}?action=parentSearch&code=${val}`);
+          const data = await response.json();
 
-          if (_0x33de.status === "FOUND") {
-            if (_0x33de.result === "PRESENT") {
-              _0x99cc.className = "result-screen success";
-              _0x99cc.innerHTML = `<b>🟢 PRÉSENT À L'ÉCOLE</b><br>${_0x33de.nom} (${_0x33de.classe})<br><span style="font-size:0.9rem;">Badgé avec succès à : <b>${_0x33de.heure}</b></span>`;
-            } else if (_0x33de.result === "ABSENT") {
-              _0x99cc.className = "result-screen danger";
-              _0x99cc.innerHTML = `<b>🔴 ÉLÈVE ABSENT</b><br>${_0x33de.nom} (${_0x33de.classe})<br><span style="font-size:0.9rem;">Non signalé à la porte (Heure limite dépassée).</span>`;
+          if (data.status === "FOUND") {
+            if (data.result === "PRESENT") {
+              res.className = "result-screen success";
+              res.innerHTML = `<b>🟢 PRÉSENT À L'ÉCOLE</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Badgé avec succès à : <b>${data.heure}</b></span>`;
+            } else if (data.result === "ABSENT") {
+              res.className = "result-screen danger";
+              res.innerHTML = `<b>🔴 ÉLÈVE ABSENT</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Non signalé à la porte (Heure limite dépassée).</span>`;
             } else {
-              _0x99cc.className = "result-screen warning";
-              _0x99cc.innerHTML = `<b>🟡 PAS ENCORE ENREGISTRÉ</b><br>${_0x33de.nom} (${_0x33de.classe})<br><span style="font-size:0.9rem;">Le pointage du matin est toujours ouvert.</span>`;
+              res.className = "result-screen warning";
+              res.innerHTML = `<b>🟡 PAS ENCORE ENREGISTRÉ</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Le pointage du matin est toujours ouvert.</span>`;
             }
           } else {
-            _0x99cc.className = "result-screen danger";
-            _0x99cc.innerHTML = "<b>MATRICULE INCONNU</b><br>Aucune correspondance trouvée.";
+            res.className = "result-screen danger";
+            res.innerHTML = "<b>MATRICULE INCONNU</b><br>Aucune correspondance trouvée.";
           }
         } catch (e) {
-          _0x99cc.className = "result-screen danger";
-          _0x99cc.innerHTML = "ERREUR RÉSEAU SUR LA BASE";
+          res.className = "result-screen danger";
+          res.innerHTML = "ERREUR RÉSEAU SUR LA BASE";
         }
       };
 
-      // Nettoyage de la console
+      // 🧹 6. NETTOYAGE SÉCURITÉ CONSOLE
       setInterval(function() { console.clear(); }, 300);
     })();
   </script>
