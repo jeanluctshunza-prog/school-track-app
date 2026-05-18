@@ -1,383 +1,301 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCHOOL TRACK // EXECUTIVE CORE</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SchoolTrack — Système de Pointage</title>
+  <style>
+    :root {
+      --primary: #0A438A; /* Bleu Institutionnel */
+      --primary-light: #1A5FA8;
+      --bg-gradient: linear-gradient(135deg, #EBF3FA 0%, #D6E4F0 100%);
+      --text-dark: #2B3A4A;
+      --success: #2ECC71;
+      --danger: #E74C3C;
+      --warning: #F39C12;
+    }
 
-    <style>
-        :root {
-            --bg-pure-black: #050506;
-            --bg-dark-gray: #09090b;
-            --border-cinema: rgba(255, 255, 255, 0.08);
-            --border-cinema-focus: rgba(255, 255, 255, 0.3);
-            --text-pure-white: #ffffff;
-            --text-dark-muted: #71717a;
-            --text-light-muted: #a1a1aa;
-            --neon-green: #00ff88;
-            --neon-red: #ff3344;
-            --font-cinema: 'Space Grotesk', sans-serif;
-            --font-body: 'Plus Jakarta Sans', sans-serif;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); -webkit-user-select: none; user-select: none; }
-        body { background-color: var(--bg-pure-black); color: var(--text-pure-white); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-        /* Trame de fond style Cinéma Cyber */
-        body::before {
-            content: ""; position: absolute; inset: 0;
-            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 0);
-            background-size: 24px 24px; pointer-events: none; opacity: 0.7; z-index: 1;
-        }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        /* 🖥️ ÉCRAN DE SÉLECTION INITIAL (SPLASH) */
-        #splash-screen { position: fixed; inset: 0; background: var(--bg-pure-black); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .cinema-brand { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 700; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 5px; }
-        .cinema-brand span { font-weight: 300; opacity: 0.5; }
-        .cinema-sub { font-family: var(--font-cinema); font-size: 0.75rem; letter-spacing: 3px; color: var(--text-dark-muted); text-transform: uppercase; margin-bottom: 60px; }
-        
-        .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 550px; width: 100%; }
-        .cinema-card-btn { background: var(--bg-dark-gray); border: 1px solid var(--border-cinema); padding: 40px 25px; cursor: pointer; text-align: left; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .cinema-card-btn::after { content: ""; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: #fff; transition: width 0.4s; }
-        .cinema-card-btn:hover::after { width: 100%; }
-        .cinema-card-btn:hover { background: #111115; border-color: var(--border-cinema-focus); transform: translateY(-2px); }
-        .cinema-card-btn i { font-size: 1.5rem; color: var(--text-light-muted); margin-bottom: 25px; display: block; }
-        .cinema-card-btn h3 { font-family: var(--font-cinema); font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-        .cinema-card-btn p { font-size: 0.8rem; color: var(--text-dark-muted); line-height: 1.4; }
+    header h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
 
-        /* 🧭 ENTÊTE DE COMMANDE ET RETOUR */
-        header { width: 100%; padding: 25px 5%; display: none; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-cinema); background: rgba(5, 5, 6, 0.8); backdrop-filter: blur(20px); z-index: 100; }
-        .nav-logo { font-family: 'Cinzel', serif; font-size: 1.25rem; letter-spacing: 4px; text-decoration: none; color: #fff; }
-        .exit-link { background: transparent; border: none; color: var(--text-dark-muted); font-family: var(--font-cinema); font-size: 0.75rem; letter-spacing: 2px; cursor: pointer; transition: 0.3s; }
-        .exit-link:hover { color: var(--text-pure-white); }
+    header p {
+      color: #627588;
+      margin-top: 5px;
+      font-size: 1rem;
+    }
 
-        /* INTERFACES DE FLUX */
-        main { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; z-index: 10; }
-        .viewport { display: none; width: 100%; max-width: 420px; animation: viewSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .active-view { display: block; }
-        
-        .cinema-panel { background: var(--bg-dark-gray); border: 1px solid var(--border-cinema); padding: 35px; position: relative; }
-        
-        /* 📟 COMPOSANTS : MODE BORNE ÉCOLE */
-        .cinema-clock { font-family: var(--font-cinema); font-size: 3rem; font-weight: 400; letter-spacing: -1px; color: #fff; margin-bottom: 2px; text-align: center; }
-        .cinema-date { font-family: var(--font-cinema); font-size: 0.7rem; color: var(--text-dark-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; text-align: center; }
-        
-        .code-moniteur { width: 100%; background: #000; border: 1px solid var(--border-cinema); height: 75px; display: flex; align-items: center; justify-content: center; font-family: var(--font-cinema); font-size: 2.2rem; letter-spacing: 12px; font-weight: 700; margin-bottom: 30px; transition: border 0.3s; color: #fff; }
-        .code-moniteur.active-focus { border-color: var(--border-cinema-focus); }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      width: 100%;
+      max-width: 1100px;
+    }
 
-        .matrix-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-        .matrix-btn { background: rgba(255,255,255,0.01); border: 1px solid var(--border-cinema); padding: 20px; font-family: var(--font-cinema); font-size: 1.3rem; color: #fff; cursor: pointer; transition: all 0.15s ease; }
-        .matrix-btn:hover { background: rgba(255,255,255,0.04); border-color: var(--border-cinema-focus); }
-        .matrix-btn:active { background: #fff; color: #000; }
-        .matrix-btn.util-btn { color: var(--text-dark-muted); font-size: 1rem; }
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .cinema-trigger-btn { width: 100%; background: #fff; border: none; color: #000; font-family: var(--font-cinema); font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; padding: 20px; cursor: pointer; transition: 0.3s; text-transform: uppercase; text-align: center; }
-        .cinema-trigger-btn:hover { background: #e4e4e7; letter-spacing: 3px; }
+    .card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 25px rgba(10, 67, 138, 0.08);
+      border: 1px solid rgba(10, 67, 138, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
 
-        .verdict-box { display: none; padding: 20px 0; text-align: center; }
-        .v-indicator { font-size: 3rem; margin-bottom: 25px; }
-        .v-title-main { font-family: var(--font-cinema); font-size: 1.4rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
-        .v-details { color: var(--text-light-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 40px; text-align: center; }
+    .card-title {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 25px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        /* 👨‍👩‍👦 COMPOSANTS : MODE PARENT */
-        .p-title { font-family: var(--font-cinema); font-size: 1.3rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; text-align: center; }
-        .p-sub { font-size: 0.8rem; color: var(--text-dark-muted); margin-bottom: 30px; text-align: center; }
-        
-        .search-bar-cinema { display: flex; background: #000; border: 1px solid var(--border-cinema); padding: 5px; margin-bottom: 30px; }
-        .search-bar-cinema input { flex-grow: 1; background: transparent; border: none; color: #fff; font-family: var(--font-cinema); font-size: 1.2rem; text-align: center; letter-spacing: 4px; padding: 10px; outline: none; }
-        .search-bar-cinema button { background: transparent; border: none; color: #fff; width: 50px; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .search-bar-cinema button:hover { color: var(--text-dark-muted); }
+    .input-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
 
-        .fiche-parent { display: none; border-top: 1px solid var(--border-cinema); padding-top: 25px; text-align: left; }
-        .fiche-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.85rem; letter-spacing: 0.5px; }
-        .fiche-row:last-child { border-bottom: none; }
-        .f-lbl { color: var(--text-dark-muted); text-transform: uppercase; font-family: var(--font-cinema); font-size: 0.75rem; }
-        .f-val { font-weight: 500; color: var(--text-pure-white); }
-        .f-val.state-ok { color: var(--neon-green); font-weight: 700; }
-        .f-val.state-no { color: var(--neon-red); font-weight: 700; }
+    .input-group label {
+      display: block;
+      text-align: left;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #7A8B9B;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
 
-        .cinema-placeholder { color: var(--text-dark-muted); font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; padding: 40px 0; line-height: 1.5; text-align: center; }
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #E2E8F0;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      text-align: center;
+      transition: all 0.3s ease;
+      background: #F8FAFC;
+    }
 
-        @keyframes viewSlideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(10, 67, 138, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    .screen-display {
+      width: 100%;
+      min-height: 120px;
+      margin-top: 25px;
+      border-radius: 12px;
+      background: #F8FAFC;
+      border: 1px dashed #CBD5E1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    /* États dynamiques de réponse */
+    .status-success { background: #E8F8F0; border-color: var(--success); color: #1E6B45; }
+    .status-danger { background: #FDE8E8; border-color: var(--danger); color: #8A2525; }
+    .status-warning { background: #FEF3E6; border-color: var(--warning); color: #8A5000; }
+
+    .status-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 5px; }
+    .status-sub { font-size: 0.95rem; font-weight: 500; }
+  </style>
 </head>
-    <script>
-  // 1. Bloquer le clic droit sur tout el site
-  document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-    alert("Sécurité : Le clic droit est désactivé sur cette application.");
-  });
-
-  // 2. Bloquer les raccourcis clavier (F12, Ctrl+U, Ctrl+Shift+I)
-  document.addEventListener('keydown', function(e) {
-    // Bloquer F12
-    if (e.key === "F12") {
-      e.preventDefault();
-      return false;
-    }
-    
-    // Bloquer CTRL + U (Code source)
-    if (e.ctrlKey && e.key === 'u') {
-      e.preventDefault();
-      return false;
-    }
-
-    // Bloquer CTRL + SHIFT + I (Inspecter l'élément)
-    if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-      e.preventDefault();
-      return false;
-    }
-    
-    // Bloquer CTRL + SHIFT + J (Console)
-    if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-      e.preventDefault();
-      return false;
-    }
-  });
-</script>
 <body>
 
-    <div id="splash-screen">
-        <div class="cinema-brand">SCHOOL<span>TRACK</span></div>
-        <div class="cinema-sub">Système Intégré Noir & Blanc</div>
-        <div class="mode-grid">
-            <div class="cinema-card-btn" onclick="activateView('kiosk')">
-                <i class="fa-thin fa-keypad"></i>
-                <h3>Borne Élève</h3>
-                <p>Interface matérielle tactile permettant le pointage horaire matinal des élèves.</p>
-            </div>
-            <div class="cinema-card-btn" onclick="activateView('parent')">
-                <i class="fa-thin fa-eye"></i>
-                <h3>Espace Parent</h3>
-                <p>Portail de vérification crypté permettant le suivi de présence en temps réel.</p>
-            </div>
+  <header>
+    <h1>SCHOOLTRACK</h1>
+    <p>Gestion d'accès scolaire numérique en temps réel</p>
+  </header>
+
+  <div class="container">
+    
+    <div class="card">
+      <div class="card-title">📟 BORNE D'ENTRÉE (Surveillant)</div>
+      <form id="borneForm" onsubmit="submitBorne(event)" style="width: 100%;">
+        <div class="input-group">
+          <label for="borneCode">Scanner ou Taper le Matricule</label>
+          <input type="text" id="borneCode" placeholder="Ex: 4512" autocomplete="off" required>
         </div>
+        <button type="submit">Valider l'entrée</button>
+      </form>
+      <div class="screen-display" id="borneScreen">
+        <span style="color: #94A3B8;">En attente de scan...</span>
+      </div>
     </div>
 
-    <header id="app-header">
-        <a href="#" class="nav-logo" onclick="forceReset()">SCHOOLTRACK</a>
-        <button class="exit-link" onclick="forceReset()"><i class="fa-solid fa-arrow-left-long"></i> RETOUR AU MENU</button>
-    </header>
-
-    <main>
-        <div class="viewport" id="view-kiosk">
-            <div class="cinema-panel">
-                <div id="kiosk-input-deck">
-                    <div class="cinema-clock" id="clock-node">00:00</div>
-                    <div class="cinema-date" id="date-node">Synchronisation...</div>
-                    
-                    <div class="code-moniteur" id="monitor-digits"></div>
-                    
-                    <div class="matrix-grid">
-                        <button class="matrix-btn" onclick="handleNumpad('1')">1</button>
-                        <button class="matrix-btn" onclick="handleNumpad('2')">2</button>
-                        <button class="matrix-btn" onclick="handleNumpad('3')">3</button>
-                        <button class="matrix-btn" onclick="handleNumpad('4')">4</button>
-                        <button class="matrix-btn" onclick="handleNumpad('5')">5</button>
-                        <button class="matrix-btn" onclick="handleNumpad('6')">6</button>
-                        <button class="matrix-btn" onclick="handleNumpad('7')">7</button>
-                        <button class="matrix-btn" onclick="handleNumpad('8')">8</button>
-                        <button class="matrix-btn" onclick="handleNumpad('9')">9</button>
-                        <button class="matrix-btn util-btn" onclick="handleNumpad('DEL')"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button class="matrix-btn" onclick="handleNumpad('0')">0</button>
-                        <button class="matrix-btn util-btn" style="color:var(--neon-red);" onclick="handleNumpad('CLEAR')">C</button>
-                    </div>
-                    <button class="cinema-trigger-btn" onclick="executeKioskCheckIn()">Valider l'arrivée</button>
-                </div>
-
-                <div class="verdict-box" id="kiosk-verdict-deck">
-                    <div id="verdict-icon-node" class="v-indicator"></div>
-                    <h2 class="v-title-main" id="verdict-title-node">-</h2>
-                    <p class="v-details" id="verdict-desc-node">-</p>
-                    <button class="cinema-trigger-btn" style="background:transparent; border:1px solid var(--border-cinema); color:#fff;" onclick="resetKiosk()">Élève Suivant</button>
-                </div>
-            </div>
+    <div class="card">
+      <div class="card-title">👨‍👩‍👦 ESPACE PARENT</div>
+      <form id="parentForm" onsubmit="submitParent(event)" style="width: 100%;">
+        <div class="input-group">
+          <label for="parentCode">Matricule de l'Élève</label>
+          <input type="text" id="parentCode" placeholder="Entrez le code à 4 chiffres" autocomplete="off" required>
         </div>
+        <button type="submit" style="background: #2B3A4A;">Vérifier la présence</button>
+      </form>
+      <div class="screen-display" id="parentScreen">
+        <span style="color: #94A3B8;">Entrez un matricule pour suivre votre enfant</span>
+      </div>
+    </div>
 
-        <div class="viewport" id="view-parent">
-            <div class="cinema-panel">
-                <h2 class="p-title">Suivi en Direct</h2>
-                <p class="p-sub">Entrez le code confidentiel attribué à votre enfant</p>
-                
-                <div class="search-bar-cinema">
-                    <input type="text" id="parent-search-field" placeholder="----" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-                    <button onclick="executeParentQuery()"><i class="fa-solid fa-arrow-right"></i></button>
-                </div>
+  </div>
 
-                <div class="fiche-parent" id="parent-data-deck">
-                    <div class="fiche-row"><span class="f-lbl">Identité Élève</span><span class="f-val" id="f-name" style="font-family:var(--font-cinema); text-transform:uppercase;">-</span></div>
-                    <div class="fiche-row"><span class="f-lbl">Classe</span><span class="f-val" id="f-class">-</span></div>
-                    <div class="fiche-row"><span class="f-lbl">Date de Session</span><span class="f-val" id="f-date">-</span></div>
-                    <div class="fiche-row"><span class="f-lbl">Pointage Borne</span><span class="f-val" id="f-time">--:--</span></div>
-                    <div class="fiche-row"><span class="f-lbl">Registre de Présence</span><span class="f-val" id="f-status">-</span></div>
-                </div>
+  <script>
+    // 🔗 REMPLACE CETTE URL PAR TON URL APPS SCRIPT MISE À JOUR
+    const API_URL = "https://script.google.com/macros/s/AKfycbwI0EoIhSe7zE3EYKr43cFxCxho_afhFjWDDFQIFm_ZfTrvwR3scKqyapTTtsz4uVVb/exec";
 
-                <div class="cinema-placeholder" id="parent-status-placeholder">
-                    <i class="fa-solid fa-shield-check" style="display:block; font-size:1.3rem; margin-bottom:12px; opacity:0.3;"></i>
-                    <span id="parent-placeholder-text">Canal de transmission sécurisé School Track en ligne.</span>
-                </div>
-            </div>
-        </div>
-    </main>
+    // Auto-focus direct sur la case borne au démarrage
+    window.onload = () => { document.getElementById('borneCode').focus(); };
 
-    <script>
-        // TON LIEN DE BASE APPS SCRIPT DIRECTEMENT INTÉGRÉ
-        const CORE_ENDPOINT = "https://script.google.com/macros/s/AKfycbwI0EoIhSe7zE3EYKr43cFxCxho_afhFjWDDFQIFm_ZfTrvwR3scKqyapTTtsz4uVVb/exec";
-        let kioskBuffer = "";
+    // --- LOGIQUE DE LA BORNE (SURVEILLANT) ---
+    function submitBorne(e) {
+      e.preventDefault();
+      const codeInput = document.getElementById('borneCode');
+      const screen = document.getElementById('borneScreen');
+      const code = codeInput.value.trim();
 
-        // MODULE SONORE AUDIO CONTEXT
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        function runBeep(hz, type, ms) {
-            try {
-                const ctx = new AudioContext();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = type;
-                osc.frequency.value = hz;
-                gain.gain.setValueAtTime(0.04, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + ms);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + ms);
-            } catch(e) { console.log('Flux audio en attente'); }
-        }
+      if(!code) return;
+      screen.innerHTML = "<span>Vérification en cours...</span>";
 
-        // COMMUTATION SANS RECHARGEMENT
-        function activateView(viewKey) {
-            document.getElementById('splash-screen').style.display = 'none';
-            document.getElementById('app-header').style.display = 'flex';
-            document.getElementById(`view-${viewKey}`).classList.add('active-view');
-            if(viewKey === 'kiosk') { runChronos(); resetKiosk(); }
-        }
+      fetch(`${API_URL}?action=checkIn&code=${code}`)
+        .then(res => res.json())
+        .then(data => {
+          screen.className = "screen-display"; // reset classes
+          
+          if(data.status === "SUCCESS") {
+            screen.classList.add("status-success");
+            screen.innerHTML = `<div class="status-title">✅ BIENVENUE</div><div class="status-sub">${data.nom} (${data.classe}) — ${data.heure}</div>`;
+          } else if(data.status === "EXPIRED") {
+            screen.classList.add("status-warning");
+            screen.innerHTML = `<div class="status-title">⚠️ ACCÈS REFUSÉ</div><div class="status-sub">${data.nom} - Abonnement expiré ou inactif.</div>`;
+          } else {
+            screen.classList.add("status-danger");
+            screen.innerHTML = `<div class="status-title">❌ INCONNU</div><div class="status-sub">Matricule introuvable ou invalide.</div>`;
+          }
+          
+          // ⏱️ RESET DE LA BORNE SPÉCIAL SURVEILLANT (Après 3 secondes)
+          setTimeout(() => {
+            codeInput.value = "";
+            screen.className = "screen-display";
+            screen.innerHTML = '<span style="color: #94A3B8;">En attente de scan...</span>';
+            codeInput.focus(); // Remet le focus directement sans cliquer
+          }, 3000);
+        })
+        .catch(err => {
+          screen.className = "screen-display status-danger";
+          screen.innerHTML = `<div class="status-title">Erreur réseau</div>`;
+        });
+    }
 
-        function forceReset() { location.reload(); }
+    // --- LOGIQUE DE L'ESPACE PARENT ---
+    function submitParent(e) {
+      e.preventDefault();
+      const code = document.getElementById('parentCode').value.trim();
+      const screen = document.getElementById('parentScreen');
 
-        // MOTEUR DU CLAVIER BORNE
-        function handleNumpad(input) {
-            const monitor = document.getElementById('monitor-digits');
-            runBeep(480, 'sine', 0.05);
-            
-            if (input === 'DEL') {
-                kioskBuffer = kioskBuffer.slice(0, -1);
-            } else if (input === 'CLEAR') {
-                kioskBuffer = "";
+      if(!code) return;
+      screen.innerHTML = "<span>Recherche...</span>";
+
+      fetch(`${API_URL}?action=parentSearch&code=${code}`)
+        .then(res => res.json())
+        .then(data => {
+          screen.className = "screen-display"; // reset classes
+          
+          if(data.status === "FOUND") {
+            if(data.present) {
+              screen.classList.add("status-success");
+              screen.innerHTML = `<div class="status-title">🟢 PRÉSENT CE MATIN</div><div class="status-sub">${data.nom} (${data.classe}) est arrivé à <b>${data.heure}</b>.</div>`;
             } else {
-                if (kioskBuffer.length < 4) kioskBuffer += input;
+              screen.classList.add("status-danger");
+              screen.innerHTML = `<div class="status-title">🔴 NON SIGNALÉ CE JOUR</div><div class="status-sub">${data.nom} (${data.classe}) n'a pas encore badgé.</div>`;
             }
-            monitor.textContent = kioskBuffer;
-            
-            if(kioskBuffer.length > 0) monitor.classList.add('active-focus');
-            else monitor.classList.remove('active-focus');
-        }
+          } else {
+            screen.classList.add("status-danger");
+            screen.innerHTML = `<div class="status-title">Code incorrect</div><div class="status-sub">Aucun élève trouvé avec ce matricule.</div>`;
+          }
+        })
+        .catch(err => {
+          screen.className = "screen-display status-danger";
+          screen.innerHTML = `<div class="status-title">Erreur serveur</div>`;
+        });
+    }
 
-        function runChronos() {
-            const sync = () => {
-                const time = new Date();
-                document.getElementById('clock-node').textContent = time.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                document.getElementById('date-node').textContent = time.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            };
-            setInterval(sync, 1000);
-            sync();
-        }
-
-        // EXECUTION ARRIVÉE ÉLÈVE (BORNE)
-        function executeKioskCheckIn() {
-            if (kioskBuffer.length !== 4) return alert("Le matricule doit comporter exactement 4 chiffres.");
-            
-            const iDeck = document.getElementById('kiosk-input-deck');
-            const vDeck = document.getElementById('kiosk-verdict-deck');
-            const vIcon = document.getElementById('verdict-icon-node');
-            const vTitle = document.getElementById('verdict-title-node');
-            const vDesc = document.getElementById('verdict-desc-node');
-
-            iDeck.style.display = 'none';
-            vDeck.style.display = 'block';
-            vIcon.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="color:#fff;"></i>`;
-            vTitle.textContent = "SYNCHRONISATION INTERNE";
-            vDesc.textContent = "Authentification des privilèges d'accès...";
-
-            fetch(`${CORE_ENDPOINT}?action=checkIn&code=${kioskBuffer}`)
-            .then(res => res.json())
-            .then(res => {
-                if (res.status === "SUCCESS") {
-                    runBeep(850, 'sine', 0.2);
-                    vIcon.innerHTML = `<i class="fa-light fa-circle-check" style="color:#fff;"></i>`;
-                    vTitle.textContent = "BIENVENUE";
-                    vDesc.innerHTML = `<span style="font-family:var(--font-cinema); font-size:1.3rem; color:#fff; text-transform:uppercase;">${res.nom}</span><br><span>${res.classe}</span><br><br><span style="color:var(--neon-green); font-size:0.85rem; font-weight:bold; letter-spacing:1px;"><i class="fa-solid fa-check"></i> ACCÈS VALIDÉ À ${res.heure}</span>`;
-                } else if (res.status === "EXPIRED") {
-                    runBeep(220, 'sawtooth', 0.4);
-                    vIcon.innerHTML = `<i class="fa-light fa-circle-exclamation" style="color:var(--text-dark-muted);"></i>`;
-                    vTitle.textContent = "COMPTE SUSPENDU";
-                    vDesc.innerHTML = `<span style="font-family:var(--font-cinema); font-size:1.2rem; text-transform:uppercase; color:#fff;">${res.nom}</span><br><br><span style="color:var(--neon-red); font-size:0.85rem; font-weight:bold; letter-spacing:1px;">ABONNEMENT REQUIS OU EXPIRÉ</span><br>Veuillez régulariser la situation auprès de la caisse.`;
-                } else {
-                    runBeep(180, 'square', 0.3);
-                    vIcon.innerHTML = `<i class="fa-light fa-ban" style="color:var(--text-dark-muted);"></i>`;
-                    vTitle.textContent = "CODE NON RÉPERTORIÉ";
-                    vDesc.textContent = "Ce matricule d'accès n'existe pas dans la base de données.";
-                }
-            })
-            .catch(err => {
-                vIcon.innerHTML = `<i class="fa-light fa-triangle-exclamation" style="color:var(--neon-red);"></i>`;
-                vTitle.textContent = "PANNE MATRICIELLE";
-                vDesc.textContent = "Rupture de communication avec l'API Google Sheets.";
-            });
-        }
-
-        function resetKiosk() {
-            kioskBuffer = "";
-            document.getElementById('monitor-digits').textContent = "";
-            document.getElementById('monitor-digits').classList.remove('active-focus');
-            document.getElementById('kiosk-verdict-deck').style.display = 'none';
-            document.getElementById('kiosk-input-deck').style.display = 'block';
-        }
-
-        // EXECUTION CONSULTATION DIRECTE (PARENT)
-        function executeParentQuery() {
-            const inputVal = document.getElementById('parent-search-field').value.trim();
-            if (inputVal.length !== 4) return alert("Veuillez saisir les 4 chiffres de contrôle.");
-
-            const dataDeck = document.getElementById('parent-data-deck');
-            const placeholder = document.getElementById('parent-status-placeholder');
-            const placeholderText = document.getElementById('parent-placeholder-text');
-
-            dataDeck.style.display = 'none';
-            placeholder.style.display = 'block';
-            placeholderText.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="color:#fff; display:block; margin-bottom:12px;"></i>Extraction de la fiche de pointage...`;
-
-            fetch(`${CORE_ENDPOINT}?action=parentSearch&code=${inputVal}`)
-            .then(res => res.json())
-            .then(res => {
-                if (res.status === "FOUND") {
-                    document.getElementById('f-name').textContent = res.nom;
-                    document.getElementById('f-class').textContent = res.classe;
-                    document.getElementById('f-date').textContent = res.date;
-                    document.getElementById('f-time').textContent = res.heure;
-                    
-                    const marker = document.getElementById('f-status');
-                    if (res.present) {
-                        marker.className = "f-val state-ok";
-                        marker.innerHTML = `<i class="fa-solid fa-square-check"></i> PRÉSENT ÉTABLISSEMENT`;
-                    } else {
-                        marker.className = "f-val state-no";
-                        marker.innerHTML = `<i class="fa-regular fa-square"></i> NON SIGNALÉ CE JOUR`;
-                    }
-
-                    placeholder.style.display = 'none';
-                    dataDeck.style.display = 'block';
-                } else {
-                    placeholderText.innerHTML = `<i class="fa-solid fa-lock" style="color:var(--text-dark-muted); display:block; font-size:1.2rem; margin-bottom:12px;"></i> Code invalide. Données sécurisées indisponibles.`;
-                }
-            })
-            .catch(err => {
-                placeholderText.innerHTML = `<i class="fa-solid fa-wifi-slash" style="color:var(--neon-red); display:block; font-size:1.2rem; margin-bottom:12px;"></i> Échec de reconnexion réseau.`;
-            });
-        }
-    </script>
+    // =================================================================
+    // 🛡️ SÉCURITÉ : BLOCAGE DES PETITS MALINS (CLIC DROIT & INSPECTER)
+    // =================================================================
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    
+    document.addEventListener('keydown', e => {
+      if (e.key === "F12" || 
+          (e.ctrlKey && e.key === 'u') || 
+          (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
 </body>
 </html>
