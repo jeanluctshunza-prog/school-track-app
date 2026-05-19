@@ -1,374 +1,215 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="icon" type="image/png" href="logo.png">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SchoolTrack Premium — Cinematic Experience</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SchoolTrack Quantum V13.3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* --- VARIABLES D'AMBIANCE CINÉMATOGRAPHIQUE --- */
     :root {
-      --bg: #030712; 
-      --card: rgba(15, 23, 42, 0.45); /* Plus sombre et immersif pour l'effet Glassmorphism */
+      --bg: #020617; 
+      --card: rgba(15, 23, 42, 0.7); 
       --accent: #00D2FF; 
       --success: #00FF94; 
       --danger: #FF3D71;
-      --neon-shadow: 0 0 20px rgba(0, 210, 255, 0.25);
+      --warning: #FFD93D;
     }
     
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      -webkit-tap-highlight-color: transparent; /* Supprime le flash bleu moche au clic sur mobile */
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
     
     body {
-      background: var(--bg); 
-      color: #F3F4F6; 
-      min-height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      padding: 16px; /* Évite que l'app touche les bords de l'écran sur mobile */
-      position: relative;
-      overflow-x: hidden;
+      background: var(--bg); color: #F3F4F6; min-height: 100vh; 
+      display: flex; align-items: center; justify-content: center; 
+      padding: 20px; position: relative; overflow: hidden;
     }
     
-    /* Écran de fond type cinéma (Aurora effect flouté) */
     body::before {
-      content: ""; 
-      position: fixed; 
-      top: -10%; left: -10%; width: 120%; height: 120%;
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(0, 255, 148, 0.04) 0%, transparent 50%); 
+      content: ""; position: fixed; inset: -10%;
+      background: radial-gradient(circle at 20% 20%, rgba(0, 210, 255, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(255, 61, 113, 0.07) 0%, transparent 40%); 
       z-index: -1;
     }
 
-    /* --- CONTENEUR GLASSMORPHISM OPTIMISÉ MOBILE --- */
     .glass {
-      background: var(--card); 
-      backdrop-filter: blur(24px); 
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.08); 
-      border-radius: 24px; /* Un poil plus arrondi pour le look premium mobile */
-      padding: 32px 24px; /* Remplissage adapté : respirant sur PC, parfait sur écran de téléphone */
-      width: 100%; 
-      max-width: 440px; /* Largeur idéale pour ressembler à une appli native sur smartphone */
-      text-align: center; 
-      box-shadow: 
-        0 4px 30px rgba(0, 0, 0, 0.4),
-        inset 0 1px 1px rgba(255, 255, 255, 0.1); /* Ligne lumineuse cinéma interne */
+      background: var(--card); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; 
+      padding: 40px 25px; width: 100%; max-width: 420px; text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     }
 
-    /* --- TYPOGRAPHIE SCI-FI --- */
-    h1 { 
-      font-family: 'Rajdhani', sans-serif; 
-      font-weight: 700;
-      font-size: 2.4rem; /* Légèrement réduit pour éviter qu'il passe sur 2 lignes sur petit mobile */
-      letter-spacing: 4px; 
-      color: #fff; 
-      text-transform: uppercase; 
-      margin-bottom: 6px;
-      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-    }
-    
-    .tagline { 
-      font-size: 0.75rem; 
-      letter-spacing: 2px; 
-      opacity: 0.5; 
-      margin-bottom: 35px; 
-      text-transform: uppercase;
+    h1 { font-family: 'Rajdhani'; font-size: 2.5rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
+    .tagline { font-size: 0.8rem; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 35px; }
+
+    .section { display: none; }
+    .section.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* --- SECTIONS --- */
-    .section { display: none; animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-    .active { display: block; }
-
-    /* --- BOUTONS CHOIX DE MENU (Effet Néon Réactif) --- */
     .menu-btn {
-      width: 100%; 
-      padding: 20px; 
-      margin-bottom: 16px; 
-      border-radius: 16px; 
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      background: rgba(255, 255, 255, 0.02); 
-      color: #fff; 
-      cursor: pointer; 
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); 
-      text-align: left;
-      display: flex; 
-      align-items: center; 
-      gap: 16px;
+      width: 100%; padding: 20px; margin-bottom: 15px; border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.03);
+      color: #fff; cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; gap: 15px; text-align: left;
     }
-    
-    /* Animation cinématique au survol / au toucher mobile */
-    .menu-btn:hover, .menu-btn:active { 
-      background: rgba(0, 210, 255, 0.06); 
-      border-color: var(--accent); 
-      box-shadow: var(--neon-shadow);
-      transform: translateY(-2px); 
-    }
-    
-    .menu-btn i { font-size: 1.4rem; color: var(--accent); font-style: normal; }
-    .menu-btn div b { display: block; font-size: 1.05rem; margin-bottom: 2px; }
-    .menu-btn div span { display: block; font-size: 0.8rem; opacity: 0.5; line-height: 1.2; }
+    .menu-btn:active { background: var(--accent); color: #000; transform: scale(0.96); }
+    .menu-btn i { font-size: 1.5rem; font-style: normal; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 12px; }
+    .menu-btn b { display: block; font-size: 1.1rem; }
+    .menu-btn span { font-size: 0.8rem; opacity: 0.6; }
 
-    /* --- CHAMP Saisie Matricule (Look Borne Épuré) --- */
     .input-box {
-      width: 100%; 
-      background: rgba(0, 0, 0, 0.4); 
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 14px; 
-      padding: 16px; 
-      color: #fff; 
-      font-size: 1.35rem; /* Ajusté pour éviter le zoom automatique forcé sur iPhone */
-      text-align: center; 
-      margin-bottom: 16px; 
-      outline: none;
-      font-weight: 600;
-      letter-spacing: 2px;
-      transition: all 0.25s ease;
+      width: 100%; background: #000; border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 15px; padding: 18px; color: #fff; font-size: 1.5rem;
+      text-align: center; margin-bottom: 20px; outline: none; font-family: 'Rajdhani'; letter-spacing: 5px;
     }
-    .input-box:focus { 
-      border-color: var(--accent); 
-      box-shadow: var(--neon-shadow);
-      background: rgba(0, 0, 0, 0.6);
-    }
+    .input-box:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,210,255,0.3); }
 
-    /* --- BOUTONS D'ACTION (Gros et faciles à cliquer avec le pouce) --- */
     .btn-action {
-      width: 100%; 
-      padding: 18px; 
-      border-radius: 14px; 
-      border: none; 
-      font-weight: 700; 
-      cursor: pointer;
-      text-transform: uppercase; 
-      letter-spacing: 2px; 
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-      position: relative;
-      overflow: hidden;
+      width: 100%; padding: 18px; border-radius: 15px; border: none;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.2s;
     }
-    
-    /* Effet d'enfoncement réaliste quand on appuie sur téléphone */
-    .btn-action:active { transform: scale(0.98); }
-    
-    .btn-blue { 
-      background: var(--accent); 
-      color: #020617; 
-      box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
-    }
-    .btn-blue:hover { box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5); }
-    
-    .btn-white { 
-      background: #FFFFFF; 
-      color: #020617; 
-      box-shadow: 0 4px 14px rgba(255, 255, 255, 0.15);
-    }
-    .btn-white:hover { box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); }
-    
-    .btn-next { 
-      background: var(--success); 
-      color: #020617; 
-      margin-top: 16px; 
-      display: none; 
-      box-shadow: 0 4px 14px rgba(0, 255, 148, 0.2);
-    }
+    .btn-blue { background: var(--accent); color: #000; }
+    .btn-white { background: #fff; color: #000; }
+    .btn-next { background: var(--success); color: #000; margin-top: 15px; display: none; }
 
-    .back-link { 
-      display: inline-block; 
-      margin-top: 24px; 
-      color: var(--accent); 
-      cursor: pointer; 
-      font-size: 0.85rem; 
-      text-decoration: none; 
-      letter-spacing: 1px;
-      opacity: 0.7;
-      transition: opacity 0.2s;
-    }
-    .back-link:hover { opacity: 1; text-shadow: var(--neon-shadow); }
-
-    /* --- ÉCRANS DE RÉSULTATS AVEC LUMIÈRE AMBIANTE (Glow) --- */
     .result-screen {
-      margin-top: 24px; 
-      padding: 18px; 
-      border-radius: 14px; 
-      background: rgba(0, 0, 0, 0.3); 
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      font-size: 0.95rem;
-      line-height: 1.5;
-      transition: all 0.3s ease;
+      margin-top: 20px; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.05); font-size: 1rem; line-height: 1.5;
     }
-    
-    .success { 
-      color: var(--success); 
-      border-color: rgba(0, 255, 148, 0.4); 
-      background: rgba(0, 255, 148, 0.03); 
-      box-shadow: 0 0 15px rgba(0, 255, 148, 0.1);
-    }
-    .danger { 
-      color: var(--danger); 
-      border-color: rgba(255, 61, 113, 0.4); 
-      background: rgba(255, 61, 113, 0.03); 
-      box-shadow: 0 0 15px rgba(255, 61, 113, 0.1);
-    }
-    .warning { 
-      color: #FFD93D; 
-      border-color: rgba(255, 217, 61, 0.4); 
-      background: rgba(255, 217, 61, 0.03); 
-      box-shadow: 0 0 15px rgba(255, 217, 61, 0.1);
-    }
+    .success { color: var(--success); border-color: var(--success); background: rgba(0,255,148,0.05); }
+    .danger { color: var(--danger); border-color: var(--danger); background: rgba(255,61,113,0.05); }
+    .warning { color: var(--warning); border-color: var(--warning); background: rgba(255,217,61,0.05); }
 
-    /* --- ANIMATION CINÉMATIQUE ULTRA-FLUIDE --- */
-    @keyframes scaleIn { 
-      from { opacity: 0; transform: scale(0.96) translateY(6px); } 
-      to { opacity: 1; transform: scale(1) translateY(0); } 
-    }
-
-    /* --- AJUSTEMENTS POUR TRÈS PETITS ÉCRANS TÉLÉPHONES --- */
-    @media (max-width: 360px) {
-      h1 { font-size: 2rem; letter-spacing: 2px; }
-      .glass { padding: 24px 16px; }
-      .menu-btn { padding: 16px; }
-    }
+    .back-link { display: block; margin-top: 25px; opacity: 0.5; font-size: 0.8rem; cursor: pointer; text-decoration: underline; }
   </style>
 </head>
 <body>
 
   <div class="glass">
     <h1>SchoolTrack</h1>
-    <p class="tagline">Intelligence & Sécurité</p>
+    <p class="tagline">Quantum Edition</p>
 
     <div id="menu-section" class="section active">
-      <div class="menu-btn" onclick="showSection('borne-section')">
+      <div class="menu-btn" onclick="goTo('borne-section')">
         <i>📟</i>
-        <div><b>BORNE ÉCOLE</b><span>Portail Surveillant (Entrée)</span></div>
+        <div><b>BORNE ENTRÉE</b><span>Surveillance portail</span></div>
       </div>
-      <div class="menu-btn" onclick="showSection('parent-section')">
+      <div class="menu-btn" onclick="goTo('parent-section')">
         <i>👨‍👩‍👦</i>
-        <div><b>ESPACE PARENT</b><span>Suivi des élèves en temps réel</span></div>
+        <div><b>ESPACE PARENT</b><span>Suivi de l'abonnement & présence</span></div>
       </div>
     </div>
 
     <div id="borne-section" class="section">
-      <h2 style="margin-bottom:20px; font-family:'Rajdhani'; letter-spacing:2px;">BORNE ENTRÉE</h2>
-      <input type="text" id="borneInput" class="input-box" placeholder="CODE MATRICULE" maxlength="4" autocomplete="off">
-      <button onclick="submitBorne()" class="btn-action btn-blue" id="btnBorne">Valider l'entrée</button>
-      <div id="borneResult" class="result-screen">En attente de scan...</div>
-      <button onclick="resetBorne()" class="btn-action btn-next" id="btnNext">Suivant ➔</button>
-      <span class="back-link" onclick="showSection('menu-section')">↩ Retour aux options</span>
+      <h3 style="margin-bottom:15px; color:var(--accent)">POINTAGE ENTRÉE</h3>
+      <input type="text" id="borneInput" class="input-box" placeholder="CODE" maxlength="4">
+      <button onclick="validerBorne()" class="btn-action btn-blue">VÉRIFIER LE BADGE</button>
+      <div id="borneResult" class="result-screen">Prêt pour le scan...</div>
+      <button onclick="resetBorne()" class="btn-action btn-next" id="btnN">SUIVANT ➔</button>
+      <p class="back-link" onclick="goTo('menu-section')">RETOUR AU MENU</p>
     </div>
 
     <div id="parent-section" class="section">
-      <h2 style="margin-bottom:20px; font-family:'Rajdhani'; letter-spacing:2px;">ESPACE PARENT</h2>
-      <input type="text" id="parentInput" class="input-box" placeholder="MATRICULE ÉLÈVE" maxlength="4" autocomplete="off">
-      <button onclick="submitParent()" class="btn-action btn-white">Vérifier le statut</button>
-      <div id="parentResult" class="result-screen">Entrez le code de votre enfant</div>
-      <span class="back-link" onclick="showSection('menu-section')">↩ Retour aux options</span>
+      <h3 style="margin-bottom:15px; color:#fff;">SUIVI PARENT</h3>
+      <input type="text" id="parentInput" class="input-box" placeholder="CODE" maxlength="4">
+      <button onclick="validerParent()" class="btn-action btn-white">RECHERCHER</button>
+      <div id="parentResult" class="result-screen">Entrez le matricule de votre enfant.</div>
+      <p class="back-link" onclick="goTo('menu-section')">RETOUR AU MENU</p>
     </div>
   </div>
 
-<script>
-    (function() {
-      // 🔒 1. PROTECTIONS CLIENTS (Blocage F12, Ctrl+U, Inspecteur, Clic droit)
-      document.addEventListener('contextmenu', e => e.preventDefault());
-      document.addEventListener('keydown', function(e) {
-        if (e.key === "F12") { e.preventDefault(); return false; }
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) { e.preventDefault(); return false; }
-        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) { e.preventDefault(); return false; }
-        if (e.ctrlKey && (e.key === 's' || e.key === 'S')) { e.preventDefault(); return false; }
-      });
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg/exec";
 
-      // 🔗 2. CONFIGURATION DE L'URL API EXACTE
-      const _0x5c3d = "https://script.google.com/macros/s/AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg/exec";
+    function goTo(sectionId) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      const target = document.getElementById(sectionId);
+      if(target) target.classList.add('active');
+    }
 
-      // --- 3. NAVIGATION INTERFACE ---
-      window['showSection'] = function(id) {
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        const inputId = id === 'borne-section' ? 'borneInput' : (id === 'parent-section' ? 'parentInput' : null);
-        if(inputId) document.getElementById(inputId).focus();
-      };
+    // INTERFACE BORNE (SURVEILLANT)
+    async function validerBorne() {
+      const code = document.getElementById('borneInput').value;
+      const res = document.getElementById('borneResult');
+      const btn = document.getElementById('btnN');
+      if(!code) return;
 
-      // --- 4. GESTION DE LA BORNE (CHECK-IN) ---
-      window['submitBorne'] = async function() {
-        const input = document.getElementById('borneInput');
-        const res = document.getElementById('borneResult');
-        const next = document.getElementById('btnNext');
-        const val = input.value.trim();
-        if (!val) return;
+      res.className = "result-screen";
+      res.innerHTML = "VÉRIFICATION...";
+      
+      try {
+        const response = await fetch(`${API_URL}?action=checkIn&code=${code}`);
+        const data = await response.json();
 
-        res.innerHTML = "VÉRIFICATION SÉCURISÉE...";
-        try {
-          const response = await fetch(`${_0x5c3d}?action=checkIn&code=${val}`);
-          const data = await response.json();
-
-          if (data.status === "SUCCESS") {
-            res.className = "result-screen success";
-            res.innerHTML = `<b>✅ ENTRÉE VALIDÉE</b><br>${data.nom}<br><span style="font-size:0.9rem; opacity:0.8;">${data.classe}</span>`;
-            next.style.display = "block";
-          } else if (data.status === "EXPIRED") {
-            res.className = "result-screen warning";
-            res.innerHTML = `<b>⚠️ ACCÈS DUPLICATÉ OU ABO EXPIRÉ</b><br>${data.nom}`;
-          } else {
-            res.className = "result-screen danger";
-            res.innerHTML = `<b>❌ CODE INVALIDE</b><br>Absent de la base élève.`;
-          }
-        } catch (e) {
+        if(data.status === "SUCCESS") {
+          res.className = "result-screen success";
+          res.innerHTML = `✅ <b>ACCÈS VALIDE</b><br><br><b>Élève :</b> ${data.nom}<br><b>Classe :</b> ${data.classe}`;
+          btn.style.display = "block";
+        } else if(data.status === "EXPIRED") {
+          res.className = "result-screen warning";
+          res.innerHTML = `⚠️ <b>ABONNEMENT EXPIRÉ</b><br><br><b>Élève :</b> ${data.nom}<br><br><span style="color:#FF3D71; font-weight:bold;">👉 BLOQUER L'ÉLÈVE !</span>`;
+        } else {
           res.className = "result-screen danger";
-          res.innerHTML = "ERREUR DE SYNC SERVEUR";
+          res.innerHTML = "❌ <b>CODE INVALIDE</b><br>Inconnu dans la base.";
         }
-      };
+      } catch(e) {
+        res.className = "result-screen danger";
+        res.innerHTML = "⚠️ ERREUR RÉSEAU SYNC";
+      }
+    }
 
-      window['resetBorne'] = function() {
-        document.getElementById('borneInput').value = "";
-        document.getElementById('borneResult').className = "result-screen";
-        document.getElementById('borneResult').innerHTML = "En attente de scan...";
-        document.getElementById('btnNext').style.display = "none";
-        document.getElementById('borneInput').focus();
-      };
+    function resetBorne() {
+      document.getElementById('borneInput').value = "";
+      document.getElementById('borneResult').className = "result-screen";
+      document.getElementById('borneResult').innerHTML = "Prêt pour le scan...";
+      document.getElementById('btnN').style.display = "none";
+      document.getElementById('borneInput').focus();
+    }
 
-      // --- 5. ESPACE SUIVI PARENT ---
-      window['submitParent'] = async function() {
-        const input = document.getElementById('parentInput');
-        const res = document.getElementById('parentResult');
-        const val = input.value.trim();
-        if (!val) return;
+    // INTERFACE PARENT
+    async function validerParent() {
+      const code = document.getElementById('parentInput').value;
+      const res = document.getElementById('parentResult');
+      if(!code) return;
 
-        res.innerHTML = "RECHERCHE DANS LE REGISTRE DIOCÉSAIN...";
-        try {
-          const response = await fetch(`${_0x5c3d}?action=parentSearch&code=${val}`);
-          const data = await response.json();
+      res.className = "result-screen";
+      res.innerHTML = "RECHERCHE SERVEUR...";
+      
+      try {
+        // Le parent fait d'abord une recherche classique
+        const response = await fetch(`${API_URL}?action=parentSearch&code=${code}`);
+        const data = await response.json();
 
-          if (data.status === "FOUND") {
-            if (data.result === "PRESENT") {
+        if(data.status === "FOUND") {
+          // 👀 SÉCURITÉ PARENT : On simule aussi le checkIn pour voir si la date est expirée !
+          const checkResp = await fetch(`${API_URL}?action=checkIn&code=${code}`);
+          const checkData = await checkResp.json();
+
+          if (checkData.status === "EXPIRED") {
+            // Si le script backend dit EXPIRED, on affiche le message d'abonnement fini !
+            res.className = "result-screen danger";
+            res.innerHTML = `🛑 <b>ABONNEMENT FINI</b><br><br><b>Élève :</b> ${data.nom}<br><br>⚠️ <i>Veuillez réactiver l'abonnement auprès de l'école pour voir les présences.</i>`;
+          } else {
+            // Si l'abonnement est bon, on montre son état de présence normal
+            if(data.result === "PRESENT") {
               res.className = "result-screen success";
-              res.innerHTML = `<b>🟢 PRÉSENT À L'ÉCOLE</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Badgé avec succès à : <b>${data.heure}</b></span>`;
-            } else if (data.result === "ABSENT") {
-              res.className = "result-screen danger";
-              res.innerHTML = `<b>🔴 ÉLÈVE ABSENT</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Non signalé à la porte (Heure limite dépassée).</span>`;
+              res.innerHTML = `🟢 <b>ÉLÈVE PRÉSENT</b><br><br><b>Enfant :</b> ${data.nom}<br><b>Arrivé à :</b> ${data.heure}`;
             } else {
               res.className = "result-screen warning";
-              res.innerHTML = `<b>🟡 PAS ENCORE ENREGISTRÉ</b><br>${data.nom} (${data.classe})<br><span style="font-size:0.9rem;">Le pointage du matin est toujours ouvert.</span>`;
+              res.innerHTML = `🔴 <b>ÉLÈVE ABSENT</b><br><br><b>Enfant :</b> ${data.nom}<br>Non signalé au portail aujourd'hui.`;
             }
-          } else {
-            res.className = "result-screen danger";
-            res.innerHTML = "<b>MATRICULE INCONNU</b><br>Aucune correspondance trouvée.";
           }
-        } catch (e) {
+        } else {
           res.className = "result-screen danger";
-          res.innerHTML = "ERREUR RÉSEAU SUR LA BASE";
+          res.innerHTML = "❌ <b>MATRICULE INCONNU</b>";
         }
-      };
-
-      // 🧹 6. NETTOYAGE SÉCURITÉ CONSOLE
-      setInterval(function() { console.clear(); }, 300);
-    })();
+      } catch(e) {
+        res.className = "result-screen danger";
+        res.innerHTML = "⚠️ ERREUR RÉSEAU";
+      }
+    }
   </script>
 </body>
 </html>
