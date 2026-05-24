@@ -3,212 +3,461 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>SchoolTrack Quantum V13.3</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <title>OptiSchool</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg: #020617; 
-      --card: rgba(15, 23, 42, 0.7); 
-      --accent: #00D2FF; 
-      --success: #00FF94; 
-      --danger: #FF3D71;
-      --warning: #FFD93D;
+      --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #d6e4f0 100%);
+      --glass-surface: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --glass-overlay: rgba(255, 255, 255, 0.8);
+      --accent-blue: #0052cc;
+      --accent-glow: rgba(0, 82, 204, 0.15);
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --shadow-premium: 0 20px 50px rgba(31, 45, 65, 0.1);
+      --radius: 24px;
     }
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-    
+
+    /* Désactivation complète de la sélection de texte pour éviter le copier-coller des scripts */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
     body {
-      background: var(--bg); color: #F3F4F6; min-height: 100vh; 
-      display: flex; align-items: center; justify-content: center; 
-      padding: 20px; position: relative; overflow: hidden;
+      background: var(--bg-gradient);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
     }
-    
-    body::before {
-      content: ""; position: fixed; inset: -10%;
-      background: radial-gradient(circle at 20% 20%, rgba(0, 210, 255, 0.15) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 80%, rgba(255, 61, 113, 0.07) 0%, transparent 40%); 
+
+    /* Sphères lumineuses décoratives d'arrière-plan (Effet de profondeur sous le verre) */
+    .blur-sphere {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
       z-index: -1;
     }
+    .sphere-1 { width: 400px; height: 400px; background: rgba(0, 102, 255, 0.15); top: -10%; left: -10%; }
+    .sphere-2 { width: 300px; height: 300px; background: rgba(0, 210, 255, 0.12); bottom: -5%; right: -5%; }
 
-    .glass {
-      background: var(--card); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; 
-      padding: 40px 25px; width: 100%; max-width: 420px; text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    /* Conteneur Principal : Effet White Transparent / Glassmorphism Premium */
+    .glass-container {
+      background: var(--glass-surface);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 460px;
+      padding: 45px 35px;
+      box-shadow: var(--shadow-premium);
+      transition: max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+      position: relative;
     }
 
-    h1 { font-family: 'Rajdhani'; font-size: 2.5rem; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
-    .tagline { font-size: 0.8rem; letter-spacing: 3px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 35px; }
-
-    .section { display: none; }
-    .section.active { display: block; animation: fadeIn 0.4s ease-out forwards; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px) scale(0.98); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+    /* Sécurité visuelle : Overlay en cas d'inspection détectée */
+    #security-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      color: var(--danger);
+      z-index: 99999;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 20px;
     }
 
-    .menu-btn {
-      width: 100%; padding: 20px; margin-bottom: 15px; border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.03);
-      color: #fff; cursor: pointer; transition: all 0.2s ease;
-      display: flex; align-items: center; gap: 15px; text-align: left;
+    /* Branding */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 35px;
     }
-    .menu-btn:active { background: var(--accent); color: #000; transform: scale(0.96); }
-    .menu-btn i { font-size: 1.5rem; font-style: normal; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 12px; }
-    .menu-btn b { display: block; font-size: 1.1rem; }
-    .menu-btn span { font-size: 0.8rem; opacity: 0.6; }
 
-    .input-box {
-      width: 100%; background: #000; border: 2px solid rgba(255,255,255,0.1);
-      border-radius: 15px; padding: 18px; color: #fff; font-size: 1.5rem;
-      text-align: center; margin-bottom: 20px; outline: none; font-family: 'Rajdhani'; letter-spacing: 5px;
+    .brand-header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.3rem;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: var(--accent-blue);
     }
-    .input-box:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(0,210,255,0.3); }
 
-    .btn-action {
-      width: 100%; padding: 18px; border-radius: 15px; border: none;
-      font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.2s;
+    .brand-header p {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      font-weight: 600;
     }
-    .btn-blue { background: var(--accent); color: #000; }
-    .btn-white { background: #fff; color: #000; }
-    .btn-next { background: var(--success); color: #000; margin-top: 15px; display: none; }
 
-    .result-screen {
-      margin-top: 20px; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.05); font-size: 1rem; line-height: 1.5;
+    /* Routes de navigation (Vues) */
+    .app-view {
+      display: none;
     }
-    .success { color: var(--success); border-color: var(--success); background: rgba(0,255,148,0.05); }
-    .danger { color: var(--danger); border-color: var(--danger); background: rgba(255,61,113,0.05); }
-    .warning { color: var(--warning); border-color: var(--warning); background: rgba(255,217,61,0.05); }
 
-    .back-link { display: block; margin-top: 25px; opacity: 0.5; font-size: 0.8rem; cursor: pointer; text-decoration: underline; }
+    .app-view.active {
+      display: block;
+      animation: viewFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes viewFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Éléments de Formulaire */
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .input-premium {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 16px;
+      padding: 16px;
+      color: var(--text-dark);
+      font-size: 1rem;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .input-premium:focus {
+      border-color: var(--accent-blue);
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 0 4px var(--accent-glow);
+    }
+
+    .input-matrix {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+      font-weight: 700;
+      color: var(--accent-blue);
+    }
+
+    /* Boutons */
+    .btn-premium {
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent-blue);
+      color: #fff;
+      box-shadow: 0 10px 25px -5px rgba(0, 82, 204, 0.3);
+    }
+
+    .btn-premium:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px -5px rgba(0, 82, 204, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      color: var(--text-dark);
+      box-shadow: none;
+      margin-top: 12px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Panneaux d'affichage des statuts et logs */
+    .status-card {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .status-card.active { display: block; animation: viewFadeIn 0.3s ease; }
+    .status-success { border-left: 4px solid var(--success); color: #065f46; }
+    .status-danger { border-left: 4px solid var(--danger); color: #991b1b; }
+    .status-warning { border-left: 4px solid #d97706; color: #92400e; }
+
+    /* Liens de retour discrets */
+    .back-link {
+      display: inline-block;
+      margin-top: 25px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent-blue); }
+
+    /* Loader */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: rotation 0.6s linear infinite;
+      display: none;
+    }
+    @keyframes rotation { to { transform: rotate(360deg); } }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false;"> <div class="blur-sphere sphere-1"></div>
+  <div class="blur-sphere sphere-2"></div>
 
-  <div class="glass">
-    <h1>SchoolTrack</h1>
-    <p class="tagline">Quantum Edition</p>
+  <div id="security-overlay">⚠️ ACTION NON AUTORISÉE : L'accès aux outils de développement est verrouillé.</div>
 
-    <div id="menu-section" class="section active">
-      <div class="menu-btn" onclick="goTo('borne-section')">
-        <i>📟</i>
-        <div><b>BORNE ENTRÉE</b><span>Surveillance portail</span></div>
+  <div class="glass-container" id="appBox">
+    
+    <div class="brand-header">
+      <h1>OptiSchool</h1>
+      <p>Smart School Management System</p>
+    </div>
+
+    <div id="view-gateway" class="app-view active">
+      <div class="form-group">
+        <label>Sélectionner votre espace</label>
+        <select id="userRole" class="input-premium" style="font-weight: 600;">
+          <option value="checkIn">📟 Borne de Pointage Établissement</option>
+          <option value="parentCheck">👨‍👩‍👦 Espace Parent d'Élève</option>
+        </select>
       </div>
-      <div class="menu-btn" onclick="goTo('parent-section')">
-        <i>👨‍👩‍👦</i>
-        <div><b>ESPACE PARENT</b><span>Suivi de l'abonnement & présence</span></div>
+      <button onclick="openSelectedModule()" class="btn-premium">Accéder à l'interface</button>
+    </div>
+
+    <div id="view-borne" class="app-view">
+      <div class="form-group">
+        <label>Scanner ou entrer le code élève</label>
+        <input type="text" id="inputBorneCode" class="input-premium input-matrix" placeholder="CODE" autocomplete="off" maxlength="15">
       </div>
+      <button onclick="triggerBorneCheckIn()" class="btn-premium" id="btnBorne">
+        <span id="txtBorne">Valider la présence</span>
+        <div class="spinner" id="spinBorne"></div>
+      </button>
+      <div id="logBorne" class="status-card"></div>
+      <p class="back-link" onclick="backToGateway()">➔ Changer d'espace</p>
     </div>
 
-    <div id="borne-section" class="section">
-      <h3 style="margin-bottom:15px; color:var(--accent)">POINTAGE ENTRÉE</h3>
-      <input type="text" id="borneInput" class="input-box" placeholder="CODE" maxlength="4">
-      <button onclick="validerBorne()" class="btn-action btn-blue">VÉRIFIER LE BADGE</button>
-      <div id="borneResult" class="result-screen">Prêt pour le scan...</div>
-      <button onclick="resetBorne()" class="btn-action btn-next" id="btnN">SUIVANT ➔</button>
-      <p class="back-link" onclick="goTo('menu-section')">RETOUR AU MENU</p>
+    <div id="view-parent" class="app-view">
+      <div class="form-group">
+        <label>Suivi en temps réel de l'enfant</label>
+        <input type="text" id="inputParentCode" class="input-premium input-matrix" placeholder="MATRICULE" autocomplete="off" maxlength="15">
+      </div>
+      <button onclick="triggerParentSearch()" class="btn-premium" id="btnParent" style="background:#1e293b; box-shadow:none;">
+        <span id="txtParent">Rechercher l'élève</span>
+        <div class="spinner" id="spinParent"></div>
+      </button>
+      <div id="logParent" class="status-card"></div>
+      <p class="back-link" onclick="backToGateway()">➔ Changer d'espace</p>
     </div>
 
-    <div id="parent-section" class="section">
-      <h3 style="margin-bottom:15px; color:#fff;">SUIVI PARENT</h3>
-      <input type="text" id="parentInput" class="input-box" placeholder="CODE" maxlength="4">
-      <button onclick="validerParent()" class="btn-action btn-white">RECHERCHER</button>
-      <div id="parentResult" class="result-screen">Entrez le matricule de votre enfant.</div>
-      <p class="back-link" onclick="goTo('menu-section')">RETOUR AU MENU</p>
-    </div>
   </div>
 
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg/exec";
+    // 🔗 URL REÇUE Connectée à la feuille Google Sheets
+    const API_ENDPOINT = "https://script.google.com/macros/s/AKfycby2mFSLapd4VoweeS5SsXN3aT2lB9dWhcuGvLy4G3rBLP7m4gpt_7uaho4TCtAKkMHhyg/exec";
 
-    function goTo(sectionId) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      const target = document.getElementById(sectionId);
-      if(target) target.classList.add('active');
-    }
-
-    // INTERFACE BORNE (SURVEILLANT)
-    async function validerBorne() {
-      const code = document.getElementById('borneInput').value;
-      const res = document.getElementById('borneResult');
-      const btn = document.getElementById('btnN');
-      if(!code) return;
-
-      res.className = "result-screen";
-      res.innerHTML = "VÉRIFICATION...";
-      
-      try {
-        const response = await fetch(`${API_URL}?action=checkIn&code=${code}`);
-        const data = await response.json();
-
-        if(data.status === "SUCCESS") {
-          res.className = "result-screen success";
-          res.innerHTML = `✅ <b>ACCÈS VALIDE</b><br><br><b>Élève :</b> ${data.nom}<br><b>Classe :</b> ${data.classe}`;
-          btn.style.display = "block";
-        } else if(data.status === "EXPIRED") {
-          res.className = "result-screen warning";
-          res.innerHTML = `⚠️ <b>ABONNEMENT EXPIRÉ</b><br><br><b>Élève :</b> ${data.nom}<br><br><span style="color:#FF3D71; font-weight:bold;">👉 BLOQUER L'ÉLÈVE !</span>`;
-        } else {
-          res.className = "result-screen danger";
-          res.innerHTML = "❌ <b>CODE INVALIDE</b><br>Inconnu dans la base.";
-        }
-      } catch(e) {
-        res.className = "result-screen danger";
-        res.innerHTML = "⚠️ ERREUR RÉSEAU SYNC";
+    function openSelectedModule() {
+      const targetRole = document.getElementById('userRole').value;
+      if(targetRole === 'checkIn') {
+        switchView('view-borne');
+        document.getElementById('inputBorneCode').focus();
+      } else {
+        switchView('view-parent');
+        document.getElementById('inputParentCode').focus();
       }
     }
 
-    function resetBorne() {
-      document.getElementById('borneInput').value = "";
-      document.getElementById('borneResult').className = "result-screen";
-      document.getElementById('borneResult').innerHTML = "Prêt pour le scan...";
-      document.getElementById('btnN').style.display = "none";
-      document.getElementById('borneInput').focus();
+    function switchView(viewId) {
+      document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
     }
 
-    // INTERFACE PARENT
-    async function validerParent() {
-      const code = document.getElementById('parentInput').value;
-      const res = document.getElementById('parentResult');
+    function backToGateway() {
+      document.getElementById('inputBorneCode').value = "";
+      document.getElementById('inputParentCode').value = "";
+      document.getElementById('logBorne').classList.remove('active');
+      document.getElementById('logParent').classList.remove('active');
+      switchView('view-gateway');
+    }
+
+    // 📡 COMMUNICATION BACKEND : ACTION 1 - POINTAGE BORNE
+    async function triggerBorneCheckIn() {
+      const codeField = document.getElementById('inputBorneCode');
+      const code = codeField.value.toUpperCase().trim();
+      const log = document.getElementById('logBorne');
+
       if(!code) return;
 
-      res.className = "result-screen";
-      res.innerHTML = "RECHERCHE SERVEUR...";
-      
+      toggleLoader('btnBorne', 'spinBorne', 'txtBorne', true);
+      log.classList.remove('active');
+
       try {
-        // Le parent fait d'abord une recherche classique
-        const response = await fetch(`${API_URL}?action=parentSearch&code=${code}`);
-        const data = await response.json();
+        const res = await fetch(`${API_ENDPOINT}?action=checkIn&code=${encodeURIComponent(code)}`);
+        const target = await res.json();
 
-        if(data.status === "FOUND") {
-          // 👀 SÉCURITÉ PARENT : On simule aussi le checkIn pour voir si la date est expirée !
-          const checkResp = await fetch(`${API_URL}?action=checkIn&code=${code}`);
-          const checkData = await checkResp.json();
-
-          if (checkData.status === "EXPIRED") {
-            // Si le script backend dit EXPIRED, on affiche le message d'abonnement fini !
-            res.className = "result-screen danger";
-            res.innerHTML = `🛑 <b>ABONNEMENT FINI</b><br><br><b>Élève :</b> ${data.nom}<br><br>⚠️ <i>Veuillez réactiver l'abonnement auprès de l'école pour voir les présences.</i>`;
-          } else {
-            // Si l'abonnement est bon, on montre son état de présence normal
-            if(data.result === "PRESENT") {
-              res.className = "result-screen success";
-              res.innerHTML = `🟢 <b>ÉLÈVE PRÉSENT</b><br><br><b>Enfant :</b> ${data.nom}<br><b>Arrivé à :</b> ${data.heure}`;
-            } else {
-              res.className = "result-screen warning";
-              res.innerHTML = `🔴 <b>ÉLÈVE ABSENT</b><br><br><b>Enfant :</b> ${data.nom}<br>Non signalé au portail aujourd'hui.`;
-            }
-          }
+        log.classList.add('active');
+        if(target.status === "SUCCESS") {
+          log.className = "status-card active status-success";
+          log.innerHTML = `✅ <b>PASSAGE AUTORISÉ</b><br><b>Nom :</b> ${target.data.nom}<br><b>Classe :</b> ${target.data.classe}<br><b>Heure :</b> ${target.data.heure}`;
+          codeField.value = "";
+        } else if(target.status === "EXPIRED") {
+          log.className = "status-card active status-danger";
+          log.innerHTML = `🛑 <b>ACCÈS REFUSÉ — ABONNEMENT EXPIRÉ</b><br>Veuillez régulariser les frais au guichet de l'établissement.`;
+        } else if(target.status === "ALREADY_DONE") {
+          log.className = "status-card active status-warning";
+          log.innerHTML = `⚠️ <b>DÉJÀ ENREGISTRÉ</b><br><b>Élève :</b> ${target.data.nom}<br>Arrivée déjà validée à ${target.data.heure}.`;
+          codeField.value = "";
         } else {
-          res.className = "result-screen danger";
-          res.innerHTML = "❌ <b>MATRICULE INCONNU</b>";
+          log.className = "status-card active status-danger";
+          log.innerHTML = `❌ <b>IDENTIFIANT INVALIDE</b><br>Code inconnu du fichier central.`;
         }
-      } catch(e) {
-        res.className = "result-screen danger";
-        res.innerHTML = "⚠️ ERREUR RÉSEAU";
+      } catch(err) {
+        log.className = "status-card active status-danger";
+        log.innerHTML = `⚠️ Échec de connexion avec le serveur de l'école.`;
+      } finally {
+        toggleLoader('btnBorne', 'spinBorne', 'txtBorne', false);
+        codeField.focus();
       }
+    }
+
+    // 📡 COMMUNICATION BACKEND : ACTION 2 - RECHERCHE PARENT
+    async function triggerParentSearch() {
+      const codeField = document.getElementById('inputParentCode');
+      const code = codeField.value.toUpperCase().trim();
+      const log = document.getElementById('logParent');
+
+      if(!code) return;
+
+      toggleLoader('btnParent', 'spinParent', 'txtParent', true);
+      log.classList.remove('active');
+
+      try {
+        const res = await fetch(`${API_ENDPOINT}?action=parentCheck&code=${encodeURIComponent(code)}`);
+        const target = await res.json();
+
+        log.classList.add('active');
+        if(target.status === "FOUND") {
+          const isPresent = target.presence === "PRESENT";
+          log.className = `status-card active ${isPresent ? 'status-success' : 'status-warning'}`;
+          log.innerHTML = isPresent ? 
+            `🟢 <b>ÉLÈVE PRÉSENT À L'ÉCOLE</b><br><b>Enfant :</b> ${target.nom}<br><b>Classe :</b> ${target.classe}<br><b>Arrivée constatée :</b> ${target.heure}` :
+            `🔴 <b>ÉLÈVE ABSENT</b><br><b>Enfant :</b> ${target.nom}<br>Aucun scan enregistré à la borne pour le moment.`;
+        } else if(target.status === "EXPIRED") {
+          log.className = "status-card active status-danger";
+          log.innerHTML = `🛑 <b>SUIVI BLOQUÉ</b><br>L'abonnement de suivi SMS/Web est expiré. Veuillez renouveler la souscription auprès de l'école.`;
+        } else {
+          log.className = "status-card active status-danger";
+          log.innerHTML = `❌ <b>CODE SANS FILIATION</b><br>Ce matricule n'existe pas dans le registre.`;
+        }
+      } catch(err) {
+        log.className = "status-card active status-danger";
+        log.innerHTML = `⚠️ Erreur de liaison réseau avec l'établissement.`;
+      } finally {
+        toggleLoader('btnParent', 'spinParent', 'txtParent', false);
+      }
+    }
+
+    function toggleLoader(btnId, spinId, txtId, isRun) {
+      const btn = document.getElementById(btnId);
+      const spin = document.getElementById(spinId);
+      const txt = document.getElementById(txtId);
+      if(isRun) {
+        btn.disabled = true;
+        txt.style.display = 'none';
+        spin.style.display = 'block';
+      } else {
+        btn.disabled = false;
+        txt.style.display = 'inline';
+        spin.style.display = 'none';
+      }
+    }
+
+    // =========================================================================
+    // 🔒 CYBER-SHIELD : SÉCURISATION AVANCÉE DU FRONTEND (PROTECTION ANTI-TRICHE)
+    // =========================================================================
+    
+    // 1. Blocage des raccourcis clavier d'inspection (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.keyCode === 123 || // F12
+        (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.keyCode === 4) ||  // Ctrl+Shift+C
+        (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+        (e.ctrlKey && e.keyCode === 85)                  // Ctrl+U (Code source)
+      ) {
+        triggerSecurityLock();
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // 2. Détection de l'ouverture de la console par analyse de l'écart de taille de fenêtre
+    const securityThreshold = 160;
+    setInterval(function() {
+      const widthThreshold = window.outerWidth - window.innerWidth > securityThreshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > securityThreshold;
+      if (widthThreshold || heightThreshold) {
+        triggerSecurityLock();
+      }
+    }, 500);
+
+    function triggerSecurityLock() {
+      document.getElementById('security-overlay').style.display = 'flex';
+      document.getElementById('appBox').style.display = 'none';
+      throw new Error("Security Lock Activated"); // Crash volontaire de l'exécution du script local
     }
   </script>
 </body>
